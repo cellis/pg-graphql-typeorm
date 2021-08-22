@@ -1,0 +1,30 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build",
+			"detail": "tsc --skipLibCheck"
+		},
+		{
+			"type": "npm",
+			"script": "fixtures:create",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: fixtures:create",
+			"detail": "tsc --skipLibCheck"
+		},
+
+		{
+			"type": "npm",
+			"script": "fixtures:drop",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: fixtures:drop",
+			"detail": "tsc --skipLibCheck"
+		}
+	]
+}

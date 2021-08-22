@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`indexes introspection all indexes loads all indexes 1`] = `
+Array [
+  Object {
+    "index_keys": Array [
+      "slug",
+    ],
+    "index_name": "user_pkey",
+    "is_primary": true,
+    "is_unique": true,
+    "method": "btree",
+    "schema_name": "superluminal",
+    "table_name": "superluminal.user",
+  },
+  Object {
+    "index_keys": Array [
+      "full_text",
+    ],
+    "index_name": "user_full_text_idx",
+    "is_primary": false,
+    "is_unique": false,
+    "method": "btree",
+    "schema_name": "superluminal",
+    "table_name": "superluminal.user",
+  },
+  Object {
+    "index_keys": Array [
+      "slug",
+    ],
+    "index_name": "transaction_pkey",
+    "is_primary": true,
+    "is_unique": true,
+    "method": "btree",
+    "schema_name": "superluminal",
+    "table_name": "superluminal.transaction",
+  },
+  Object {
+    "index_keys": Array [
+      "user_id",
+    ],
+    "index_name": "transaction_user_id_idx",
+    "is_primary": false,
+    "is_unique": false,
+    "method": "btree",
+    "schema_name": "superluminal",
+    "table_name": "superluminal.transaction",
+  },
+  Object {
+    "index_keys": Array [
+      "id",
+    ],
+    "index_name": "product_pkey",
+    "is_primary": true,
+    "is_unique": true,
+    "method": "btree",
+    "schema_name": "superluminal",
+    "table_name": "superluminal.product",
+  },
+  Object {
+    "index_keys": Array [
+      "slug",
+    ],
+    "index_name": "photo_pkey",
+    "is_primary": true,
+    "is_unique": true,
+    "method": "btree",
+    "schema_name": "superluminal",
+    "table_name": "superluminal.photo",
+  },
+  Object {
+    "index_keys": Array [
+      "user_id",
+    ],
+    "index_name": "photo_user_id_idx",
+    "is_primary": false,
+    "is_unique": false,
+    "method": "btree",
+    "schema_name": "superluminal",
+    "table_name": "superluminal.photo",
+  },
+  Object {
+    "index_keys": Array [
+      "slug",
+    ],
+    "index_name": "payment_details_pkey",
+    "is_primary": true,
+    "is_unique": true,
+    "method": "btree",
+    "schema_name": "superluminal_private",
+    "table_name": "superluminal_private.payment_details",
+  },
+  Object {
+    "index_keys": Array [
+      "user_slug",
+    ],
+    "index_name": "account_pkey",
+    "is_primary": true,
+    "is_unique": true,
+    "method": "btree",
+    "schema_name": "superluminal",
+    "table_name": "superluminal.account",
+  },
+]
+`;

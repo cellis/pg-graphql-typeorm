@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createModel when a table has indexes generates a model with indexes 1`] = `
+Object {
+  "user_full_text_idx": Object {
+    "columns": Array [
+      "full_text",
+    ],
+    "unique": false,
+  },
+  "user_pkey": Object {
+    "columns": Array [
+      "slug",
+    ],
+    "unique": true,
+  },
+}
+`;
