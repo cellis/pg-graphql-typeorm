@@ -79,7 +79,9 @@ export const serializeManyToOne = (
 
   if (manyToOne.joinColumns) {
     const jc = manyToOne.joinColumns[0];
-    const refCol = `referencedColumnName: '${jc.referencedColumnName}'`;
+    const refCol = `referencedColumnName: '${camelCase(
+      jc.referencedColumnName
+    )}'`;
     body.push(`  @JoinColumn([{ name: '${jc.name}', ${refCol} }])`);
   }
 
