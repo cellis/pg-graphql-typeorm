@@ -1,0 +1,1 @@
+{"version":3,"file":"ProductTable.js","sourceRoot":"","sources":["../../../../lib/test/fixtures/tables/ProductTable.ts"],"names":[],"mappings":";;AAAA,yCAA+D;AAE/D,MAAM,YAAY,GAAoB;IACpC,GAAG,EAAE;QACH,IAAI,EAAE,kBAAM;KACb;IAED,UAAU,EAAE;QACV,IAAI,EAAE,gBAAI;QACV,YAAY,EAAE,eAAG;KAClB;IAED,UAAU,EAAE;QACV,IAAI,EAAE,gBAAI;QACV,YAAY,EAAE,eAAG;KAClB;CACF,CAAC;AACF,kBAAe,YAAY,CAAC"}

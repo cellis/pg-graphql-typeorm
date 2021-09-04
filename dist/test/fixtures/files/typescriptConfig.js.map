@@ -1,0 +1,1 @@
+{"version":3,"file":"typescriptConfig.js","sourceRoot":"","sources":["../../../../lib/test/fixtures/files/typescriptConfig.ts"],"names":[],"mappings":";;;;;;;;;;;AAAA,kBAAe,GAAS,EAAE;IACxB,MAAM,MAAM,GAAwB;QAClC,aAAa,EAAE;YACb,OAAO,EAAE;gBACP,IAAI,EAAE,IAAI;aACX;YACD,cAAc,EAAE;gBACd,sBAAsB,EAAE,IAAI;aAC7B;SACF;KACF,CAAC;IAEF,OAAO,MAAM,CAAC;AAChB,CAAC,CAAA,CAAC"}

@@ -17,8 +17,7 @@
     "test": "yarn fixtures:create && jest ; yarn fixtures:drop",
     "fixtures:create": "ts-node --files ./lib/scripts/createDatabase.ts",
     "fixtures:drop": "ts-node --files ./lib/scripts/dropDatabase.ts",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
-    "postinstall": "yarn build"
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
   },
   "devDependencies": {
     "@types/dedent": "^0.7.0",
