@@ -58,6 +58,7 @@ const handleImports = (model, graphql) => {
         isModule: true,
         partial: typeormImports,
     };
+    delete imp0rts[model.name.toLowerCase()];
     return imp0rts;
 };
 exports.default = handleImports;

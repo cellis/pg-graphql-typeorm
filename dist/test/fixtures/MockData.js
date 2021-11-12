@@ -12,9 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateMockTables = exports.UserIndexes = exports.transactionUserIdIdxName = exports.transactionPrimaryKeyName = exports.paymentDetailsUserSlugFkName = exports.paymentDetailsUserIdIdxName = exports.paymentDetailsPrimaryKeyName = exports.photoUserSlugFkName = exports.photoUserIdIdxName = exports.photoPrimaryKeyName = exports.userPrimaryKeyName = exports.userFullTextIdxName = exports.getIndexNameForTable = exports.getForeignKeyNameForTables = exports.getPrimaryKeyNameForTable = void 0;
+exports.generateMockTables = exports.MessageIndexes = exports.UserIndexes = exports.transactionUserIdIdxName = exports.transactionPrimaryKeyName = exports.paymentDetailsUserSlugFkName = exports.paymentDetailsUserIdIdxName = exports.paymentDetailsPrimaryKeyName = exports.photoUserSlugFkName = exports.photoUserIdIdxName = exports.photoPrimaryKeyName = exports.messagePrimaryKeyName = exports.userPrimaryKeyName = exports.userFullTextIdxName = exports.getIndexNameForTable = exports.getForeignKeyNameForTables = exports.getPrimaryKeyNameForTable = void 0;
 const sequelize_1 = require("sequelize");
 const AccountTable_1 = __importDefault(require("./tables/AccountTable"));
+const MessageTable_1 = __importDefault(require("./tables/MessageTable"));
 const PaymentDetailsTable_1 = __importDefault(require("./tables/PaymentDetailsTable"));
 const PhotoTable_1 = __importDefault(require("./tables/PhotoTable"));
 const ProductTable_1 = __importDefault(require("./tables/ProductTable"));
@@ -34,6 +35,7 @@ function getIndexNameForTable(table, column) {
 exports.getIndexNameForTable = getIndexNameForTable;
 exports.userFullTextIdxName = getIndexNameForTable('user', 'full_text');
 exports.userPrimaryKeyName = getPrimaryKeyNameForTable('user');
+exports.messagePrimaryKeyName = getPrimaryKeyNameForTable('message');
 exports.photoPrimaryKeyName = getPrimaryKeyNameForTable('photo');
 exports.photoUserIdIdxName = getIndexNameForTable('photo', 'user_id');
 exports.photoUserSlugFkName = getForeignKeyNameForTables('photo', 'user', 'slug');
@@ -54,6 +56,13 @@ exports.UserIndexes = [
         name: exports.userFullTextIdxName,
     },
 ];
+exports.MessageIndexes = [
+    {
+        unique: true,
+        fields: ['id'],
+        name: exports.messagePrimaryKeyName,
+    },
+];
 function generateMockTables(config, database, schema) {
     return __awaiter(this, void 0, void 0, function* () {
         const sequelize = new sequelize_1.Sequelize(Object.assign({ dialect: 'postgres', logging: false, database }, config));
@@ -61,6 +70,12 @@ function generateMockTables(config, database, schema) {
             tableName: 'user',
             schema,
             indexes: exports.UserIndexes,
+            timestamps: false,
+        });
+        const Message = sequelize.define('Message', MessageTable_1.default, {
+            tableName: 'message',
+            schema,
+            indexes: exports.MessageIndexes,
             timestamps: false,
         });
         const Transaction = sequelize.define('Transaction', TransactionTable_1.default, {
@@ -119,6 +134,12 @@ function generateMockTables(config, database, schema) {
         const Account = sequelize.define('Account', AccountTable_1.default, {
             tableName: 'account',
             schema,
+        });
+        Message.hasMany(Message, {
+            sourceKey: 'id',
+            foreignKey: 'response_to',
+            foreignKeyConstraint: true,
+            onDelete: 'CASCADE',
         });
         Transaction.hasOne(User, {
             sourceKey: 'user_id',

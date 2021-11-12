@@ -1,6 +1,6 @@
 {
   "name": "pg-graphql-typeorm",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Easily generate graphql typeorm entities with one command",
   "repository": "github:cellis/pg-graphql-typeorm",
   "main": "./lib/index.js",

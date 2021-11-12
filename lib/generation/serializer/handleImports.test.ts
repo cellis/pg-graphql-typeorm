@@ -10,6 +10,7 @@ describe('handleImports', () => {
   let client: Client;
   let User: Superluminal.Model;
   let Photo: Superluminal.Model;
+  let Message: Superluminal.Model;
   let Product: Superluminal.Model;
   beforeAll(async (done) => {
     client = await connectTestDb();
@@ -21,6 +22,7 @@ describe('handleImports', () => {
     User = models.user;
     Photo = models.photo;
     Product = models.product;
+    Message = models.message;
     done();
   });
 
@@ -30,6 +32,18 @@ describe('handleImports', () => {
 
   describe('top level imports', () => {
     // should add top level imports first
+    it('does not add self-referential imports', () => {
+      const imp0rts = handleImports(Message, true);
+
+      const selfImports = Object.keys(imp0rts)
+        .filter((key) => {
+          return !imp0rts[key].isModule;
+        })
+        .sort();
+
+      expect(selfImports).not.toContain('message');
+    });
+
     it('adds top level imports at the top of the import', () => {
       const imp0rts = handleImports(User, true);
 

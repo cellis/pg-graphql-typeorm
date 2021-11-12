@@ -26,6 +26,17 @@ Array [
   },
   Object {
     "index_keys": Array [
+      "id",
+    ],
+    "index_name": "message_pkey",
+    "is_primary": true,
+    "is_unique": true,
+    "method": "btree",
+    "schema_name": "superluminal",
+    "table_name": "superluminal.message",
+  },
+  Object {
+    "index_keys": Array [
       "slug",
     ],
     "index_name": "transaction_pkey",

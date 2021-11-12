@@ -1,6 +1,7 @@
 import { PgToolsConfig } from 'pgtools';
 import { Sequelize } from 'sequelize';
 import AccountTable from './tables/AccountTable';
+import MessageTable from './tables/MessageTable';
 import PaymentDetailsTable from './tables/PaymentDetailsTable';
 import PhotoTable from './tables/PhotoTable';
 import ProductTable from './tables/ProductTable';
@@ -25,6 +26,7 @@ export function getIndexNameForTable(table: string, column: string) {
 
 export const userFullTextIdxName = getIndexNameForTable('user', 'full_text');
 export const userPrimaryKeyName = getPrimaryKeyNameForTable('user');
+export const messagePrimaryKeyName = getPrimaryKeyNameForTable('message');
 export const photoPrimaryKeyName = getPrimaryKeyNameForTable('photo');
 export const photoUserIdIdxName = getIndexNameForTable('photo', 'user_id');
 export const photoUserSlugFkName = getForeignKeyNameForTables(
@@ -67,6 +69,14 @@ export const UserIndexes = [
   },
 ];
 
+export const MessageIndexes = [
+  {
+    unique: true,
+    fields: ['id'],
+    name: messagePrimaryKeyName,
+  },
+];
+
 export async function generateMockTables(
   config: PgToolsConfig,
   database: string,
@@ -83,6 +93,13 @@ export async function generateMockTables(
     tableName: 'user',
     schema,
     indexes: UserIndexes,
+    timestamps: false,
+  });
+
+  const Message = sequelize.define('Message', MessageTable, {
+    tableName: 'message',
+    schema,
+    indexes: MessageIndexes,
     timestamps: false,
   });
 
@@ -147,6 +164,13 @@ export async function generateMockTables(
   const Account = sequelize.define('Account', AccountTable, {
     tableName: 'account',
     schema,
+  });
+
+  Message.hasMany(Message, {
+    sourceKey: 'id',
+    foreignKey: 'response_to',
+    foreignKeyConstraint: true,
+    onDelete: 'CASCADE',
   });
 
   Transaction.hasOne(User, {

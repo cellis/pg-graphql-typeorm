@@ -88,6 +88,8 @@ const handleImports = (
     partial: typeormImports,
   };
 
+  delete imp0rts[model.name.toLowerCase()];
+
   return imp0rts;
 };
 
