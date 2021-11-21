@@ -1,6 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1636698062186" clover="3.2.0">
-  <project timestamp="1636698062186" name="All files">
-    <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="0" coveredelements="0" complexity="0" loc="0" ncloc="0" packages="0" files="0" classes="0"/>
+<coverage generated="1637475240094" clover="3.2.0">
+  <project timestamp="1637475240094" name="All files">
+    <metrics statements="54" coveredstatements="52" conditionals="14" coveredconditionals="9" methods="7" coveredmethods="7" elements="75" coveredelements="68" complexity="0" loc="54" ncloc="54" packages="5" files="6" classes="6"/>
+    <package name="generation">
+      <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <file name="createModels.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/createModels.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="11" count="7" type="stmt"/>
+        <line num="12" count="31" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+      </file>
+      <file name="createRelationships.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/createRelationships.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="6" type="stmt"/>
+        <line num="11" count="24" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="generation.associations">
+      <metrics statements="14" coveredstatements="12" conditionals="14" coveredconditionals="9" methods="1" coveredmethods="1"/>
+      <file name="handleForeignNonPrimaryKey2.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/associations/handleForeignNonPrimaryKey2.ts">
+        <metrics statements="14" coveredstatements="12" conditionals="14" coveredconditionals="9" methods="1" coveredmethods="1"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="21" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="22" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="24" count="1" type="cond" truecount="2" falsecount="2"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="31" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="generation.serializer">
+      <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="serialize.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/serializer/serialize.ts">
+        <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="15" count="10" type="stmt"/>
+        <line num="17" count="10" type="stmt"/>
+        <line num="19" count="10" type="stmt"/>
+        <line num="21" count="10" type="stmt"/>
+        <line num="23" count="10" type="stmt"/>
+        <line num="33" count="10" type="stmt"/>
+        <line num="35" count="10" type="stmt"/>
+      </file>
+    </package>
+    <package name="introspection">
+      <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <file name="introspectDb.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/introspection/introspectDb.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="22" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="test">
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="connectTestDb.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/test/connectTestDb.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
+        <line num="10" count="5" type="stmt"/>
+        <line num="12" count="5" type="stmt"/>
+      </file>
+    </package>
   </project>
 </coverage>

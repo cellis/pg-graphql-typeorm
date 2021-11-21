@@ -5,6 +5,7 @@ import MessageTable from './tables/MessageTable';
 import PaymentDetailsTable from './tables/PaymentDetailsTable';
 import PhotoTable from './tables/PhotoTable';
 import ProductTable from './tables/ProductTable';
+import ShipmentTable from './tables/ShipmentTable';
 import TransactionTable from './tables/TransactionTable';
 import UserTable from './tables/UserTable';
 
@@ -35,6 +36,19 @@ export const photoUserSlugFkName = getForeignKeyNameForTables(
   'slug'
 );
 
+export const shipmentPrimaryKeyName = getPrimaryKeyNameForTable('shipment');
+export const shipmentFromUserIdFkName = getForeignKeyNameForTables(
+  'shipment_from',
+  'user',
+  'slug'
+);
+export const shipmentToUserIdFkName = getForeignKeyNameForTables(
+  'shipment_to',
+  'user',
+  'slug'
+);
+export const shipmenToUserIdIdxName = getIndexNameForTable('shipment', 'to');
+
 export const paymentDetailsPrimaryKeyName = getPrimaryKeyNameForTable(
   'payment_details'
 );
@@ -51,6 +65,7 @@ export const paymentDetailsUserSlugFkName = getForeignKeyNameForTables(
 export const transactionPrimaryKeyName = getPrimaryKeyNameForTable(
   'transaction'
 );
+
 export const transactionUserIdIdxName = getIndexNameForTable(
   'transaction',
   'user_id'
@@ -119,6 +134,26 @@ export async function generateMockTables(
     ],
   });
 
+  const Shipment = sequelize.define('Shipment', ShipmentTable, {
+    schema,
+    tableName: 'shipment',
+    indexes: [
+      {
+        fields: ['slug'],
+        unique: true,
+        name: shipmentPrimaryKeyName,
+      },
+      {
+        fields: ['from'],
+        name: shipmentFromUserIdFkName,
+      },
+      {
+        fields: ['to'],
+        name: shipmentToUserIdFkName,
+      },
+    ],
+  });
+
   sequelize.define('Product', ProductTable, {
     schema,
     tableName: 'product',
@@ -175,6 +210,20 @@ export async function generateMockTables(
 
   Transaction.hasOne(User, {
     sourceKey: 'user_id',
+    foreignKey: 'slug',
+    foreignKeyConstraint: true,
+    onDelete: 'CASCADE',
+  });
+
+  Shipment.hasOne(User, {
+    sourceKey: 'from',
+    foreignKey: 'slug',
+    foreignKeyConstraint: true,
+    onDelete: 'CASCADE',
+  });
+
+  Shipment.hasOne(User, {
+    sourceKey: 'to',
     foreignKey: 'slug',
     foreignKeyConstraint: true,
     onDelete: 'CASCADE',

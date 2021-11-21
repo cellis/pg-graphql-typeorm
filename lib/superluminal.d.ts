@@ -24,6 +24,11 @@ declare namespace Superluminal {
     graphql?: boolean;
   }
 
+  interface AssociationMapping {
+    oneToManys: Record<string, Record<string, string[]>>;
+    manyToOnes: Record<string, Record<string, string[]>>;
+  }
+
   // helpers
   type ManyToOnes = Record<string, ManyToOne>;
   type OneToManys = Record<string, Association>;

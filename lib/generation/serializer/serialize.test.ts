@@ -10,6 +10,7 @@ describe('serialize', () => {
   let User: Superluminal.Model;
   let Photo: Superluminal.Model;
   let Transaction: Superluminal.Model;
+  let Shipment: Superluminal.Model;
   let PaymentDetails: Superluminal.Model;
   let Account: Superluminal.Model;
   let models: Superluminal.Models;
@@ -25,6 +26,7 @@ describe('serialize', () => {
 
     PaymentDetails = models.payment_details;
     Account = models.account;
+    Shipment = models.shipment;
     Transaction = models.transaction;
     Photo = models.photo;
     User = models.user;

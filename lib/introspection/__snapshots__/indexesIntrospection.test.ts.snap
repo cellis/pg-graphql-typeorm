@@ -59,6 +59,39 @@ Array [
   },
   Object {
     "index_keys": Array [
+      "slug",
+    ],
+    "index_name": "shipment_pkey",
+    "is_primary": true,
+    "is_unique": true,
+    "method": "btree",
+    "schema_name": "superluminal",
+    "table_name": "superluminal.shipment",
+  },
+  Object {
+    "index_keys": Array [
+      "\\"from\\"",
+    ],
+    "index_name": "shipment_from_user_slug_fk",
+    "is_primary": false,
+    "is_unique": false,
+    "method": "btree",
+    "schema_name": "superluminal",
+    "table_name": "superluminal.shipment",
+  },
+  Object {
+    "index_keys": Array [
+      "\\"to\\"",
+    ],
+    "index_name": "shipment_to_user_slug_fk",
+    "is_primary": false,
+    "is_unique": false,
+    "method": "btree",
+    "schema_name": "superluminal",
+    "table_name": "superluminal.shipment",
+  },
+  Object {
+    "index_keys": Array [
       "id",
     ],
     "index_name": "product_pkey",
