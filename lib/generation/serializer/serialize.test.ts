@@ -124,8 +124,6 @@ describe('serialize', () => {
 
             @OneToMany(() => Transaction, (transaction) => transaction.user)
             transactions: Transaction[];
-
-
           }"
         `);
 
@@ -163,8 +161,6 @@ describe('serialize', () => {
               name: 'user_id',
             })
             userId: string;
-
-
 
             @ManyToOne(
               () => User,
@@ -208,7 +204,6 @@ describe('serialize', () => {
               name: 'url', nullable: true,
             })
             url: string | null;
-
           }"
         `);
 
@@ -248,10 +243,6 @@ describe('serialize', () => {
 
             @OneToOne(() => User, (user) => user.slug)
             user: User;
-
-
-
-
           }"
         `);
 
@@ -288,8 +279,6 @@ describe('serialize', () => {
               name: 'user_id',
             })
             userId: string;
-
-
 
             @ManyToOne(
               () => User,
@@ -394,8 +383,6 @@ describe('serialize', () => {
 
             @OneToMany(() => Transaction, (transaction) => transaction.user)
             transactions: Transaction[];
-
-
           }"
         `);
 
@@ -441,8 +428,6 @@ describe('serialize', () => {
               name: 'updatedAt',
             })
             updatedAt: Date;
-
-
 
             @ManyToOne(
               () => User,
@@ -504,8 +489,6 @@ describe('serialize', () => {
             })
             userId: string;
 
-
-
             @ManyToOne(
               () => User,
               user => user.transactions,
@@ -554,7 +537,6 @@ describe('serialize', () => {
               name: 'url', nullable: true,
             })
             url: string | null;
-
           }"
         `);
 
@@ -601,10 +583,6 @@ describe('serialize', () => {
 
             @OneToOne(() => User, (user) => user.slug)
             user: User;
-
-
-
-
           }"
         `);
 
@@ -648,8 +626,6 @@ describe('serialize', () => {
               name: 'user_id',
             })
             userId: string;
-
-
 
             @ManyToOne(
               () => User,

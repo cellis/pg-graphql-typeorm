@@ -176,17 +176,15 @@ export default (
     }
   }
 
-  result.push(
-    serializeOneToManybyAssoc(model, associationMapping.oneToManys[model.name])
-  );
+  const oneToManys = associationMapping.oneToManys[model.name];
+  if (oneToManys) {
+    result.push(serializeOneToManybyAssoc(model, oneToManys));
+  }
 
-  result.push(
-    serializeManyToOnebyAssoc(
-      model,
-      associationMapping.manyToOnes[model.name],
-      models
-    )
-  );
+  const manyToOnes = associationMapping.manyToOnes[model.name];
+  if (manyToOnes) {
+    result.push(serializeManyToOnebyAssoc(model, manyToOnes, models));
+  }
 
   return result.join('\n\n');
 };

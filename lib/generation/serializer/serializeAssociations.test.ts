@@ -142,9 +142,7 @@ describe('serializeAssociations', () => {
           shipmentsByTo: Shipment[];
 
           @OneToMany(() => Transaction, (transaction) => transaction.user)
-          transactions: Transaction[];
-
-        "
+          transactions: Transaction[];"
       `);
     });
   });
