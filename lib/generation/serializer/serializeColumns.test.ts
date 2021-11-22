@@ -14,7 +14,10 @@ describe('serializeColumns', () => {
     const introspection = await introspectDb(client, ['superluminal']);
     const models: Superluminal.Models = {};
     createModels(models, introspection);
-    createRelationships(models, introspection);
+    createRelationships(models, introspection, {
+      manyToOnes: {},
+      oneToManys: {},
+    });
 
     Product = models.product;
     User = models.user;

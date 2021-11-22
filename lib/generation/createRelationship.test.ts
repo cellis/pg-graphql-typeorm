@@ -14,7 +14,10 @@ describe('createRelationship', () => {
     const introspection = await introspectDb(client, ['superluminal']);
     const models: Superluminal.Models = {};
     createModels(models, introspection);
-    createRelationships(models, introspection);
+    createRelationships(models, introspection, {
+      manyToOnes: {},
+      oneToManys: {},
+    });
     User = models.user;
     Photo = models.photo;
     Transaction = models.transaction;
@@ -101,7 +104,7 @@ describe('createRelationship', () => {
     it('handles multiple oneToManys', () => {
       // eslint-disable-next-line
       expect(Object.keys(User.oneToManys!).sort()).toEqual(
-        ['photo', 'transaction'].sort()
+        ['photo', 'shipment', 'transaction'].sort()
       );
     });
   });

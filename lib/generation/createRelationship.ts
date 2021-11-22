@@ -3,12 +3,14 @@ import { Table } from '@wmfs';
 import { getTableFromFullyQualifiedPath } from '../introspection/indexesIntrospection';
 // eslint-disable-next-line
 import handleForeignNonPrimaryKey from './associations/handleForeignNonPrimaryKey';
+import handleForeignNonPrimaryKey2 from './associations/handleForeignNonPrimaryKey2';
 import handleSharedPrimaryKey from './associations/handleSharedPrimaryKey';
 
 const createRelationship = (
   modelName: string,
   table: Table,
-  models: Record<string, Superluminal.Model>
+  models: Record<string, Superluminal.Model>,
+  associationMapping: Superluminal.AssociationMapping
 ) => {
   const model: Superluminal.Model = models[modelName];
 
@@ -22,6 +24,8 @@ const createRelationship = (
     handleSharedPrimaryKey(model, fk, foreignModel);
 
     handleForeignNonPrimaryKey(model, fk, foreignModel);
+
+    handleForeignNonPrimaryKey2(model, fk, foreignModel, associationMapping);
   }
 };
 

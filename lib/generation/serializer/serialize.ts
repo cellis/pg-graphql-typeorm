@@ -8,7 +8,8 @@ import { PascalCase } from './utils';
 export default (
   model: Superluminal.Model,
   models: Superluminal.Models,
-  options: Superluminal.Args
+  options: Superluminal.Args,
+  associationMapping: Superluminal.AssociationMapping
 ): string => {
   // sort all imports first.
 
@@ -18,7 +19,11 @@ export default (
 
   const indexesStatement = serializeIndexes(model);
 
-  const associationsStatement = serializeAssociations(model, models);
+  const associationsStatement = serializeAssociations(
+    model,
+    models,
+    associationMapping
+  );
 
   const bodyStatement = serializeBody(
     model.name,

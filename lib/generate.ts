@@ -35,12 +35,21 @@ async function generate() {
 
     const introspection = await introspectDb(client, schemas);
     const models: Superluminal.Models = {};
+    const associationMapping: Superluminal.AssociationMapping = {
+      oneToManys: {},
+      manyToOnes: {},
+    };
 
     createModels(models, introspection);
-    createRelationships(models, introspection);
+    createRelationships(models, introspection, associationMapping);
 
     for (const [modelName, model] of Object.entries(models)) {
-      const serialized = serialize(model, models, { graphql: !!graphql });
+      const serialized = serialize(
+        model,
+        models,
+        { graphql: !!graphql },
+        associationMapping
+      );
 
       const fileName = PascalCase(modelName);
 

@@ -13,7 +13,10 @@ describe('serializeImports', () => {
     const introspection = await introspectDb(client, ['superluminal']);
     const models: Superluminal.Models = {};
     createModels(models, introspection);
-    createRelationships(models, introspection);
+    createRelationships(models, introspection, {
+      manyToOnes: {},
+      oneToManys: {},
+    });
 
     User = models.user;
     done();
@@ -28,6 +31,7 @@ describe('serializeImports', () => {
       "import { BaseEntity, Column, Entity, Index, OneToMany, OneToOne } from 'typeorm';
       import { Account } from './Account';
       import { Photo } from './Photo';
+      import { Shipment } from './Shipment';
       import { Transaction } from './Transaction';
       "
     `);

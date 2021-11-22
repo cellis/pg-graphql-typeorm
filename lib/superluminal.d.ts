@@ -24,9 +24,17 @@ declare namespace Superluminal {
     graphql?: boolean;
   }
 
+  type ManyToOneMeta = {
+    pair: string[];
+    onDelete?: string;
+  };
+  type AssociationRecord = Record<string, string[][] | undefined> | undefined;
+  type ManyToOneRecord =
+    | Record<string, ManyToOneMeta[] | undefined>
+    | undefined;
   interface AssociationMapping {
-    oneToManys: Record<string, Record<string, string[]>>;
-    manyToOnes: Record<string, Record<string, string[]>>;
+    oneToManys: Record<string, AssociationRecord>;
+    manyToOnes: Record<string, ManyToOneRecord>;
   }
 
   // helpers

@@ -1,92 +1,451 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1637475240094" clover="3.2.0">
-  <project timestamp="1637475240094" name="All files">
-    <metrics statements="54" coveredstatements="52" conditionals="14" coveredconditionals="9" methods="7" coveredmethods="7" elements="75" coveredelements="68" complexity="0" loc="54" ncloc="54" packages="5" files="6" classes="6"/>
-    <package name="generation">
-      <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+<coverage generated="1637554930030" clover="3.2.0">
+  <project timestamp="1637554930030" name="All files">
+    <metrics statements="368" coveredstatements="348" conditionals="143" coveredconditionals="115" methods="48" coveredmethods="45" elements="559" coveredelements="508" complexity="0" loc="368" ncloc="368" packages="6" files="20" classes="20"/>
+    <package name="lib">
+      <metrics statements="36" coveredstatements="36" conditionals="8" coveredconditionals="5" methods="1" coveredmethods="1"/>
+      <file name="generate.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generate.ts">
+        <metrics statements="36" coveredstatements="36" conditionals="8" coveredconditionals="5" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="24" count="4" type="stmt"/>
+        <line num="25" count="4" type="stmt"/>
+        <line num="26" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="27" count="4" type="cond" truecount="4" falsecount="2"/>
+        <line num="28" count="4" type="stmt"/>
+        <line num="34" count="4" type="stmt"/>
+        <line num="36" count="3" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="38" count="3" type="stmt"/>
+        <line num="43" count="3" type="stmt"/>
+        <line num="44" count="3" type="stmt"/>
+        <line num="46" count="3" type="stmt"/>
+        <line num="47" count="21" type="stmt"/>
+        <line num="54" count="21" type="stmt"/>
+        <line num="56" count="21" type="stmt"/>
+        <line num="57" count="21" type="stmt"/>
+        <line num="59" count="21" type="stmt"/>
+        <line num="62" count="3" type="stmt"/>
+        <line num="64" count="3" type="stmt"/>
+        <line num="66" count="3" type="stmt"/>
+        <line num="68" count="1" type="stmt"/>
+        <line num="72" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="lib.generation">
+      <metrics statements="48" coveredstatements="46" conditionals="13" coveredconditionals="12" methods="4" coveredmethods="4"/>
       <file name="createModels.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/createModels.ts">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="2" count="4" type="stmt"/>
-        <line num="4" count="4" type="stmt"/>
-        <line num="8" count="4" type="stmt"/>
-        <line num="10" count="4" type="stmt"/>
-        <line num="11" count="7" type="stmt"/>
-        <line num="12" count="31" type="stmt"/>
-        <line num="16" count="4" type="stmt"/>
+        <line num="2" count="14" type="stmt"/>
+        <line num="4" count="14" type="stmt"/>
+        <line num="8" count="15" type="stmt"/>
+        <line num="10" count="15" type="stmt"/>
+        <line num="11" count="19" type="stmt"/>
+        <line num="12" count="109" type="stmt"/>
+        <line num="16" count="15" type="stmt"/>
+      </file>
+      <file name="createRelationship.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/createRelationship.ts">
+        <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="3" count="14" type="stmt"/>
+        <line num="5" count="14" type="stmt"/>
+        <line num="6" count="14" type="stmt"/>
+        <line num="7" count="14" type="stmt"/>
+        <line num="9" count="14" type="stmt"/>
+        <line num="15" count="109" type="stmt"/>
+        <line num="17" count="109" type="stmt"/>
+        <line num="18" count="90" type="stmt"/>
+        <line num="19" count="90" type="stmt"/>
+        <line num="22" count="90" type="stmt"/>
+        <line num="24" count="90" type="stmt"/>
+        <line num="26" count="90" type="stmt"/>
+        <line num="28" count="90" type="stmt"/>
+        <line num="32" count="14" type="stmt"/>
       </file>
       <file name="createRelationships.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/createRelationships.ts">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="2" count="3" type="stmt"/>
-        <line num="3" count="3" type="stmt"/>
-        <line num="7" count="3" type="stmt"/>
-        <line num="9" count="3" type="stmt"/>
-        <line num="10" count="6" type="stmt"/>
-        <line num="11" count="24" type="stmt"/>
-        <line num="15" count="3" type="stmt"/>
+        <line num="2" count="14" type="stmt"/>
+        <line num="3" count="14" type="stmt"/>
+        <line num="8" count="15" type="stmt"/>
+        <line num="10" count="15" type="stmt"/>
+        <line num="11" count="19" type="stmt"/>
+        <line num="12" count="109" type="stmt"/>
+        <line num="16" count="15" type="stmt"/>
+      </file>
+      <file name="resolveTypeGraphqlType.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/resolveTypeGraphqlType.ts">
+        <metrics statements="20" coveredstatements="18" conditionals="13" coveredconditionals="12" methods="1" coveredmethods="1"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="4" count="205" type="cond" truecount="2" falsecount="0"/>
+        <line num="5" count="36" type="stmt"/>
+        <line num="8" count="169" type="stmt"/>
+        <line num="9" count="169" type="stmt"/>
+        <line num="11" count="169" type="stmt"/>
+        <line num="14" count="85" type="stmt"/>
+        <line num="15" count="85" type="stmt"/>
+        <line num="18" count="7" type="stmt"/>
+        <line num="19" count="7" type="stmt"/>
+        <line num="22" count="7" type="stmt"/>
+        <line num="23" count="7" type="stmt"/>
+        <line num="27" count="70" type="stmt"/>
+        <line num="28" count="70" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="34" count="169" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="7" type="stmt"/>
+        <line num="38" count="169" type="stmt"/>
       </file>
     </package>
-    <package name="generation.associations">
-      <metrics statements="14" coveredstatements="12" conditionals="14" coveredconditionals="9" methods="1" coveredmethods="1"/>
+    <package name="lib.generation.associations">
+      <metrics statements="34" coveredstatements="30" conditionals="31" coveredconditionals="23" methods="3" coveredmethods="3"/>
       <file name="handleForeignNonPrimaryKey2.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/associations/handleForeignNonPrimaryKey2.ts">
-        <metrics statements="14" coveredstatements="12" conditionals="14" coveredconditionals="9" methods="1" coveredmethods="1"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="18" count="1" type="stmt"/>
-        <line num="21" count="1" type="cond" truecount="3" falsecount="1"/>
-        <line num="22" count="1" type="cond" truecount="3" falsecount="1"/>
-        <line num="24" count="1" type="cond" truecount="2" falsecount="2"/>
-        <line num="26" count="0" type="stmt"/>
-        <line num="29" count="1" type="stmt"/>
-        <line num="31" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="35" count="1" type="stmt"/>
-        <line num="47" count="1" type="stmt"/>
-        <line num="50" count="1" type="stmt"/>
+        <metrics statements="19" coveredstatements="19" conditionals="22" coveredconditionals="19" methods="1" coveredmethods="1"/>
+        <line num="10" count="14" type="stmt"/>
+        <line num="16" count="92" type="stmt"/>
+        <line num="17" count="92" type="stmt"/>
+        <line num="18" count="92" type="stmt"/>
+        <line num="21" count="92" type="cond" truecount="3" falsecount="1"/>
+        <line num="22" count="92" type="cond" truecount="3" falsecount="1"/>
+        <line num="24" count="92" type="cond" truecount="4" falsecount="0"/>
+        <line num="26" count="15" type="stmt"/>
+        <line num="29" count="77" type="cond" truecount="2" falsecount="0"/>
+        <line num="30" count="77" type="cond" truecount="2" falsecount="0"/>
+        <line num="32" count="77" type="cond" truecount="2" falsecount="0"/>
+        <line num="33" count="77" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="77" type="stmt"/>
+        <line num="43" count="77" type="stmt"/>
+        <line num="47" count="77" type="cond" truecount="1" falsecount="1"/>
+        <line num="48" count="77" type="stmt"/>
+        <line num="51" count="77" type="stmt"/>
+        <line num="60" count="92" type="stmt"/>
+        <line num="63" count="14" type="stmt"/>
+      </file>
+      <file name="hasOtherColumnNames.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/associations/hasOtherColumnNames.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="2" count="30" type="cond" truecount="3" falsecount="0"/>
+        <line num="4" count="30" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+      </file>
+      <file name="resolveColumnName.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/associations/resolveColumnName.ts">
+        <metrics statements="12" coveredstatements="8" conditionals="6" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="30" type="stmt"/>
+        <line num="7" count="30" type="stmt"/>
+        <line num="9" count="30" type="cond" truecount="1" falsecount="1"/>
+        <line num="10" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="21" count="30" type="stmt"/>
+        <line num="24" count="4" type="stmt"/>
       </file>
     </package>
-    <package name="generation.serializer">
-      <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+    <package name="lib.generation.serializer">
+      <metrics statements="238" coveredstatements="224" conditionals="91" coveredconditionals="75" methods="37" coveredmethods="34"/>
+      <file name="handleImports.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/serializer/handleImports.ts">
+        <metrics statements="27" coveredstatements="27" conditionals="12" coveredconditionals="10" methods="1" coveredmethods="1"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="18" count="5" type="stmt"/>
+        <line num="23" count="44" type="stmt"/>
+        <line num="25" count="44" type="stmt"/>
+        <line num="27" count="44" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="21" type="stmt"/>
+        <line num="30" count="21" type="stmt"/>
+        <line num="31" count="21" type="stmt"/>
+        <line num="38" count="44" type="cond" truecount="2" falsecount="0"/>
+        <line num="39" count="16" type="stmt"/>
+        <line num="41" count="16" type="stmt"/>
+        <line num="42" count="40" type="stmt"/>
+        <line num="49" count="44" type="cond" truecount="2" falsecount="0"/>
+        <line num="50" count="17" type="stmt"/>
+        <line num="52" count="17" type="stmt"/>
+        <line num="53" count="17" type="stmt"/>
+        <line num="60" count="44" type="stmt"/>
+        <line num="61" count="44" type="cond" truecount="1" falsecount="1"/>
+        <line num="62" count="44" type="stmt"/>
+        <line num="75" count="44" type="cond" truecount="1" falsecount="1"/>
+        <line num="76" count="44" type="stmt"/>
+        <line num="79" count="44" type="cond" truecount="2" falsecount="0"/>
+        <line num="80" count="32" type="stmt"/>
+        <line num="86" count="44" type="stmt"/>
+        <line num="91" count="44" type="stmt"/>
+        <line num="93" count="44" type="stmt"/>
+        <line num="96" count="5" type="stmt"/>
+      </file>
       <file name="serialize.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/serializer/serialize.ts">
         <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="15" count="10" type="stmt"/>
-        <line num="17" count="10" type="stmt"/>
-        <line num="19" count="10" type="stmt"/>
-        <line num="21" count="10" type="stmt"/>
-        <line num="23" count="10" type="stmt"/>
-        <line num="33" count="10" type="stmt"/>
-        <line num="35" count="10" type="stmt"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="16" count="32" type="stmt"/>
+        <line num="18" count="32" type="stmt"/>
+        <line num="20" count="32" type="stmt"/>
+        <line num="22" count="32" type="stmt"/>
+        <line num="28" count="32" type="stmt"/>
+        <line num="38" count="32" type="stmt"/>
+        <line num="40" count="32" type="stmt"/>
+      </file>
+      <file name="serializeAssociations.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/serializer/serializeAssociations.ts">
+        <metrics statements="82" coveredstatements="69" conditionals="22" coveredconditionals="15" methods="11" coveredmethods="8"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="13" count="12" type="stmt"/>
+        <line num="14" count="12" type="stmt"/>
+        <line num="15" count="12" type="stmt"/>
+        <line num="16" count="12" type="stmt"/>
+        <line num="17" count="12" type="stmt"/>
+        <line num="18" count="12" type="stmt"/>
+        <line num="20" count="12" type="stmt"/>
+        <line num="26" count="4" type="stmt"/>
+        <line num="30" count="33" type="stmt"/>
+        <line num="31" count="33" type="cond" truecount="2" falsecount="0"/>
+        <line num="32" count="9" type="stmt"/>
+        <line num="34" count="9" type="stmt"/>
+        <line num="35" count="21" type="stmt"/>
+        <line num="36" count="21" type="stmt"/>
+        <line num="37" count="21" type="cond" truecount="1" falsecount="1"/>
+        <line num="38" count="21" type="stmt"/>
+        <line num="39" count="27" type="stmt"/>
+        <line num="41" count="27" type="stmt"/>
+        <line num="43" count="27" type="stmt"/>
+        <line num="46" count="27" type="cond" truecount="2" falsecount="0"/>
+        <line num="47" count="27" type="stmt"/>
+        <line num="49" count="27" type="cond" truecount="2" falsecount="0"/>
+        <line num="50" count="12" type="stmt"/>
+        <line num="52" count="27" type="stmt"/>
+        <line num="53" count="27" type="stmt"/>
+        <line num="55" count="27" type="stmt"/>
+        <line num="61" count="33" type="stmt"/>
+        <line num="64" count="4" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+        <line num="70" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="71" count="0" type="stmt"/>
+        <line num="72" count="0" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="75" count="0" type="stmt"/>
+        <line num="76" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="77" count="0" type="stmt"/>
+        <line num="78" count="0" type="stmt"/>
+        <line num="79" count="0" type="stmt"/>
+        <line num="81" count="0" type="stmt"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="83" count="0" type="stmt"/>
+        <line num="85" count="0" type="stmt"/>
+        <line num="90" count="0" type="stmt"/>
+        <line num="92" count="1" type="stmt"/>
+        <line num="93" count="1" type="stmt"/>
+        <line num="95" count="1" type="stmt"/>
+        <line num="96" count="1" type="stmt"/>
+        <line num="99" count="1" type="stmt"/>
+        <line num="106" count="4" type="stmt"/>
+        <line num="112" count="2" type="stmt"/>
+        <line num="114" count="2" type="stmt"/>
+        <line num="116" count="2" type="stmt"/>
+        <line num="118" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="119" count="2" type="stmt"/>
+        <line num="121" count="2" type="stmt"/>
+        <line num="123" count="2" type="stmt"/>
+        <line num="124" count="2" type="stmt"/>
+        <line num="126" count="2" type="stmt"/>
+        <line num="131" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="132" count="2" type="stmt"/>
+        <line num="135" count="2" type="stmt"/>
+        <line num="141" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="142" count="2" type="stmt"/>
+        <line num="143" count="2" type="stmt"/>
+        <line num="146" count="2" type="stmt"/>
+        <line num="149" count="2" type="stmt"/>
+        <line num="152" count="2" type="stmt"/>
+        <line num="158" count="4" type="stmt"/>
+        <line num="163" count="33" type="stmt"/>
+        <line num="165" count="33" type="cond" truecount="2" falsecount="0"/>
+        <line num="166" count="11" type="stmt"/>
+        <line num="167" count="11" type="stmt"/>
+        <line num="168" count="11" type="stmt"/>
+        <line num="179" count="33" type="stmt"/>
+        <line num="183" count="33" type="stmt"/>
+        <line num="191" count="33" type="stmt"/>
+      </file>
+      <file name="serializeBody.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/serializer/serializeBody.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="2"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="11" count="33" type="stmt"/>
+        <line num="19" count="231" type="stmt"/>
+        <line num="21" count="33" type="stmt"/>
+      </file>
+      <file name="serializeColumns.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/serializer/serializeColumns.ts">
+        <metrics statements="36" coveredstatements="36" conditionals="24" coveredconditionals="23" methods="5" coveredmethods="5"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="12" count="254" type="stmt"/>
+        <line num="14" count="254" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="50" type="stmt"/>
+        <line num="18" count="204" type="stmt"/>
+        <line num="20" count="204" type="stmt"/>
+        <line num="21" count="204" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="35" type="stmt"/>
+        <line num="24" count="35" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="4" type="stmt"/>
+        <line num="29" count="204" type="cond" truecount="2" falsecount="0"/>
+        <line num="30" count="101" type="stmt"/>
+        <line num="33" count="204" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="28" type="stmt"/>
+        <line num="35" count="28" type="stmt"/>
+        <line num="37" count="28" type="stmt"/>
+        <line num="38" count="28" type="cond" truecount="2" falsecount="0"/>
+        <line num="39" count="11" type="stmt"/>
+        <line num="40" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="42" count="17" type="stmt"/>
+        <line num="45" count="28" type="stmt"/>
+        <line num="48" count="204" type="cond" truecount="2" falsecount="0"/>
+        <line num="50" count="204" type="stmt"/>
+        <line num="51" count="204" type="stmt"/>
+        <line num="54" count="204" type="stmt"/>
+        <line num="64" count="1020" type="stmt"/>
+        <line num="67" count="204" type="stmt"/>
+        <line num="70" count="4" type="stmt"/>
+        <line num="74" count="35" type="stmt"/>
+        <line num="75" count="35" type="stmt"/>
+        <line num="78" count="254" type="stmt"/>
+        <line num="84" count="254" type="stmt"/>
+        <line num="88" count="4" type="stmt"/>
+      </file>
+      <file name="serializeImports.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/serializer/serializeImports.ts">
+        <metrics statements="20" coveredstatements="19" conditionals="6" coveredconditionals="5" methods="6" coveredmethods="6"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="109" type="stmt"/>
+        <line num="6" count="109" type="cond" truecount="1" falsecount="1"/>
+        <line num="7" count="109" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="11" count="109" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="34" type="cond" truecount="4" falsecount="0"/>
+        <line num="17" count="34" type="stmt"/>
+        <line num="19" count="34" type="stmt"/>
+        <line num="20" count="109" type="stmt"/>
+        <line num="22" count="62" type="stmt"/>
+        <line num="24" count="62" type="stmt"/>
+        <line num="27" count="34" type="stmt"/>
+        <line num="28" count="109" type="stmt"/>
+        <line num="30" count="47" type="stmt"/>
+        <line num="32" count="47" type="stmt"/>
+        <line num="37" count="34" type="stmt"/>
+      </file>
+      <file name="serializeIndexFile.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/serializer/serializeIndexFile.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="7" count="29" type="stmt"/>
+        <line num="8" count="29" type="stmt"/>
+      </file>
+      <file name="serializeIndexes.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/serializer/serializeIndexes.ts">
+        <metrics statements="10" coveredstatements="10" conditionals="4" coveredconditionals="3" methods="3" coveredmethods="3"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="33" type="stmt"/>
+        <line num="5" count="33" type="stmt"/>
+        <line num="9" count="57" type="stmt"/>
+        <line num="11" count="57" type="stmt"/>
+        <line num="12" count="57" type="stmt"/>
+        <line num="14" count="57" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="57" type="stmt"/>
+        <line num="19" count="33" type="stmt"/>
+      </file>
+      <file name="serializeManyToOneByAssoc.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/serializer/serializeManyToOneByAssoc.ts">
+        <metrics statements="32" coveredstatements="32" conditionals="12" coveredconditionals="9" methods="4" coveredmethods="4"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="11" count="33" type="stmt"/>
+        <line num="12" count="33" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="17" type="stmt"/>
+        <line num="14" count="17" type="stmt"/>
+        <line num="16" count="17" type="stmt"/>
+        <line num="17" count="17" type="stmt"/>
+        <line num="18" count="17" type="cond" truecount="1" falsecount="1"/>
+        <line num="19" count="17" type="stmt"/>
+        <line num="20" count="21" type="stmt"/>
+        <line num="21" count="21" type="stmt"/>
+        <line num="22" count="21" type="stmt"/>
+        <line num="23" count="21" type="stmt"/>
+        <line num="25" count="21" type="stmt"/>
+        <line num="27" count="21" type="stmt"/>
+        <line num="31" count="21" type="stmt"/>
+        <line num="36" count="21" type="stmt"/>
+        <line num="37" count="21" type="cond" truecount="1" falsecount="1"/>
+        <line num="38" count="21" type="stmt"/>
+        <line num="40" count="21" type="cond" truecount="1" falsecount="1"/>
+        <line num="41" count="21" type="stmt"/>
+        <line num="44" count="21" type="stmt"/>
+        <line num="45" count="21" type="stmt"/>
+        <line num="47" count="21" type="cond" truecount="2" falsecount="0"/>
+        <line num="48" count="8" type="stmt"/>
+        <line num="50" count="13" type="stmt"/>
+        <line num="52" count="21" type="stmt"/>
+        <line num="64" count="33" type="stmt"/>
+      </file>
+      <file name="utils.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/generation/serializer/utils.ts">
+        <metrics statements="8" coveredstatements="8" conditionals="3" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="1" count="9" type="stmt"/>
+        <line num="2" count="9" type="stmt"/>
+        <line num="3" count="9" type="cond" truecount="0" falsecount="1"/>
+        <line num="4" count="322" type="stmt"/>
+        <line num="6" count="9" type="stmt"/>
+        <line num="7" count="270" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="10" type="stmt"/>
+        <line num="11" count="260" type="stmt"/>
       </file>
     </package>
-    <package name="introspection">
+    <package name="lib.introspection">
       <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
       <file name="introspectDb.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/introspection/introspectDb.ts">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="2" count="4" type="stmt"/>
-        <line num="4" count="4" type="stmt"/>
-        <line num="11" count="4" type="stmt"/>
-        <line num="14" count="4" type="stmt"/>
-        <line num="15" count="4" type="stmt"/>
-        <line num="20" count="4" type="stmt"/>
-        <line num="22" count="4" type="stmt"/>
+        <line num="2" count="14" type="stmt"/>
+        <line num="4" count="14" type="stmt"/>
+        <line num="11" count="14" type="stmt"/>
+        <line num="14" count="15" type="stmt"/>
+        <line num="15" count="15" type="stmt"/>
+        <line num="20" count="15" type="stmt"/>
+        <line num="22" count="15" type="stmt"/>
       </file>
     </package>
-    <package name="test">
+    <package name="lib.test">
       <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="connectTestDb.ts" path="/Users/cameronellis/work/pg-graphql-typeorm/lib/test/connectTestDb.ts">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="1" count="5" type="stmt"/>
-        <line num="3" count="5" type="stmt"/>
-        <line num="4" count="5" type="stmt"/>
-        <line num="10" count="5" type="stmt"/>
-        <line num="12" count="5" type="stmt"/>
+        <line num="1" count="12" type="stmt"/>
+        <line num="3" count="12" type="stmt"/>
+        <line num="4" count="12" type="stmt"/>
+        <line num="10" count="12" type="stmt"/>
+        <line num="12" count="12" type="stmt"/>
       </file>
     </package>
   </project>

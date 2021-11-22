@@ -5,6 +5,7 @@ exports[`serializeImports serializes the graphql imports properly 1`] = `
 import { BaseEntity, Column, Entity, Index, OneToMany, OneToOne } from 'typeorm';
 import { Account } from './Account';
 import { Photo } from './Photo';
+import { Shipment } from './Shipment';
 import { Transaction } from './Transaction';
 "
 `;

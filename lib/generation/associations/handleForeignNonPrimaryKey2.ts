@@ -26,22 +26,35 @@ const handleForeignNonPrimaryKey2 = (
       break;
     }
 
-    const existingOneToManys = associationMapping.oneToManys[source.name];
+    const existingOneToManys = associationMapping.oneToManys[target.name] || {};
+    const existingManyToOnes = associationMapping.manyToOnes[source.name] || {};
 
-    if (existingOneToManys) {
-      existingOneToManys[target.name];
-    }
+    const existingOTMKeys = existingOneToManys[source.name] || [];
+    const existingMTOKeys = existingManyToOnes[target.name] || [];
 
     associationMapping.oneToManys = {
-      [source.name]: {},
+      ...associationMapping.oneToManys,
+      [target.name]: {
+        ...existingOneToManys,
+        [source.name]: [...existingOTMKeys, [sourceColumn, targetColumn]],
+      },
     };
 
-    // associationMapping.manyToOnes = {
-    //   [target.name]: [
-    //     ...associationMapping.manyToOnes[target.name],
-    //     source.name,
-    //   ],
-    // };
+    const mtoMeta: Superluminal.ManyToOneMeta = {
+      pair: [sourceColumn, targetColumn],
+    };
+
+    if (fk.deleteAction) {
+      mtoMeta.onDelete = fk.deleteAction;
+    }
+
+    associationMapping.manyToOnes = {
+      ...associationMapping.manyToOnes,
+      [source.name]: {
+        ...existingManyToOnes,
+        [target.name]: [...existingMTOKeys, mtoMeta],
+      },
+    };
   }
 
   return associationMapping;

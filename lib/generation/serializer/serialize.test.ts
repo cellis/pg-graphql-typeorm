@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 import { Client } from 'pg';
 import introspectDb from '../../introspection/introspectDb';
 import connectTestDb from '../../test/connectTestDb';
@@ -14,6 +16,7 @@ describe('serialize', () => {
   let PaymentDetails: Superluminal.Model;
   let Account: Superluminal.Model;
   let models: Superluminal.Models;
+  let associationMapping: Superluminal.AssociationMapping;
   beforeAll(async (done) => {
     client = await connectTestDb();
     const introspection = await introspectDb(client, [
@@ -21,8 +24,12 @@ describe('serialize', () => {
       'superluminal_private',
     ]);
     models = {};
+    associationMapping = {
+      manyToOnes: {},
+      oneToManys: {},
+    };
     createModels(models, introspection);
-    createRelationships(models, introspection);
+    createRelationships(models, introspection, associationMapping);
 
     PaymentDetails = models.payment_details;
     Account = models.account;
@@ -41,11 +48,12 @@ describe('serialize', () => {
     describe('graphql false', () => {
       it('serializes properly', () => {
         // // eslint-disable-next-line
-        expect(serialize(User, models, { graphql: false }))
+        expect(serialize(User, models, { graphql: false }, associationMapping))
           .toMatchInlineSnapshot(`
           "import { BaseEntity, Column, Entity, Index, OneToMany, OneToOne } from 'typeorm';
           import { Account } from './Account';
           import { Photo } from './Photo';
+          import { Shipment } from './Shipment';
           import { Transaction } from './Transaction';
 
           @Index('user_full_text_idx', ['fullText'], {})
@@ -105,16 +113,25 @@ describe('serialize', () => {
             @OneToOne(() => Account, (account) => account.userSlug)
             account: Account;
 
+            @OneToMany(() => Photo, (photo) => photo.user)
+            photos: Photo[];
+
+            @OneToMany(() => Shipment, (shipment) => shipment.fromBySlug)
+            shipmentsByFrom: Shipment[];
+
+            @OneToMany(() => Shipment, (shipment) => shipment.toBySlug)
+            shipmentsByTo: Shipment[];
+
             @OneToMany(() => Transaction, (transaction) => transaction.user)
             transactions: Transaction[];
 
-            @OneToMany(() => Photo, (photo) => photo.user)
-            photos: Photo[];
+
           }"
         `);
 
-        expect(serialize(Transaction, models, { graphql: false }))
-          .toMatchInlineSnapshot(`
+        expect(
+          serialize(Transaction, models, { graphql: false }, associationMapping)
+        ).toMatchInlineSnapshot(`
           "import { BaseEntity, Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
           import { User } from './User';
 
@@ -147,6 +164,8 @@ describe('serialize', () => {
             })
             userId: string;
 
+
+
             @ManyToOne(
               () => User,
               user => user.transactions,
@@ -157,8 +176,14 @@ describe('serialize', () => {
           }"
         `);
 
-        expect(serialize(PaymentDetails, models, { graphql: false }))
-          .toMatchInlineSnapshot(`
+        expect(
+          serialize(
+            PaymentDetails,
+            models,
+            { graphql: false },
+            associationMapping
+          )
+        ).toMatchInlineSnapshot(`
           "import { BaseEntity, Column, Entity, Index } from 'typeorm';
 
           @Index('payment_details_pkey', ['slug'], { unique: true })
@@ -183,11 +208,13 @@ describe('serialize', () => {
               name: 'url', nullable: true,
             })
             url: string | null;
+
           }"
         `);
 
-        expect(serialize(Account, models, { graphql: false }))
-          .toMatchInlineSnapshot(`
+        expect(
+          serialize(Account, models, { graphql: false }, associationMapping)
+        ).toMatchInlineSnapshot(`
           "import { BaseEntity, Column, Entity, Index, OneToOne } from 'typeorm';
           import { User } from './User';
 
@@ -221,10 +248,14 @@ describe('serialize', () => {
 
             @OneToOne(() => User, (user) => user.slug)
             user: User;
+
+
+
+
           }"
         `);
 
-        expect(serialize(Photo, models, { graphql: false }))
+        expect(serialize(Photo, models, { graphql: false }, associationMapping))
           .toMatchInlineSnapshot(`
           "import { BaseEntity, Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
           import { User } from './User';
@@ -258,6 +289,8 @@ describe('serialize', () => {
             })
             userId: string;
 
+
+
             @ManyToOne(
               () => User,
               user => user.photos,
@@ -273,12 +306,13 @@ describe('serialize', () => {
     describe('graphql true', () => {
       it('serializes properly', () => {
         // // eslint-disable-next-line
-        expect(serialize(User, models, { graphql: true }))
+        expect(serialize(User, models, { graphql: true }, associationMapping))
           .toMatchInlineSnapshot(`
           "import { Field, ID, ObjectType } from 'type-graphql';
           import { BaseEntity, Column, Entity, Index, OneToMany, OneToOne } from 'typeorm';
           import { Account } from './Account';
           import { Photo } from './Photo';
+          import { Shipment } from './Shipment';
           import { Transaction } from './Transaction';
 
           @Index('user_full_text_idx', ['fullText'], {})
@@ -349,16 +383,88 @@ describe('serialize', () => {
             @OneToOne(() => Account, (account) => account.userSlug)
             account: Account;
 
+            @OneToMany(() => Photo, (photo) => photo.user)
+            photos: Photo[];
+
+            @OneToMany(() => Shipment, (shipment) => shipment.fromBySlug)
+            shipmentsByFrom: Shipment[];
+
+            @OneToMany(() => Shipment, (shipment) => shipment.toBySlug)
+            shipmentsByTo: Shipment[];
+
             @OneToMany(() => Transaction, (transaction) => transaction.user)
             transactions: Transaction[];
 
-            @OneToMany(() => Photo, (photo) => photo.user)
-            photos: Photo[];
+
           }"
         `);
 
-        expect(serialize(Transaction, models, { graphql: true }))
-          .toMatchInlineSnapshot(`
+        expect(
+          serialize(Shipment, models, { graphql: true }, associationMapping)
+        ).toMatchInlineSnapshot(`
+          "import { Field, ID, ObjectType } from 'type-graphql';
+          import { BaseEntity, Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
+          import { User } from './User';
+
+          @Index('shipment_from_user_slug_fk', ['from'], {})
+          @Index('shipment_pkey', ['slug'], { unique: true })
+          @Index('shipment_to_user_slug_fk', ['to'], {})
+          @Entity('shipment', { schema: 'superluminal' })
+          @ObjectType()
+          export class Shipment extends BaseEntity {
+            @Field(() => Date)
+            @Column('timestamp with time zone', {
+              name: 'createdAt',
+            })
+            createdAt: Date;
+
+            @Field(() => String)
+            @Column('uuid', {
+              name: 'from',
+            })
+            from: string;
+
+            @Field(() => ID)
+            @Column('uuid', {
+              name: 'slug', primary: true,
+            })
+            slug: string;
+
+            @Field(() => String)
+            @Column('uuid', {
+              name: 'to',
+            })
+            to: string;
+
+            @Field(() => Date)
+            @Column('timestamp with time zone', {
+              name: 'updatedAt',
+            })
+            updatedAt: Date;
+
+
+
+            @ManyToOne(
+              () => User,
+              user => user.shipmentsByFrom,
+              { onDelete: 'NO ACTION' }
+            )
+            @JoinColumn([{ name: 'from', referencedColumnName: 'slug' }])
+            fromBySlug: User;
+
+            @ManyToOne(
+              () => User,
+              user => user.shipmentsByTo,
+              { onDelete: 'NO ACTION' }
+            )
+            @JoinColumn([{ name: 'to', referencedColumnName: 'slug' }])
+            toBySlug: User;
+          }"
+        `);
+
+        expect(
+          serialize(Transaction, models, { graphql: true }, associationMapping)
+        ).toMatchInlineSnapshot(`
           "import { Field, ID, ObjectType } from 'type-graphql';
           import { BaseEntity, Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
           import { User } from './User';
@@ -398,6 +504,8 @@ describe('serialize', () => {
             })
             userId: string;
 
+
+
             @ManyToOne(
               () => User,
               user => user.transactions,
@@ -408,8 +516,14 @@ describe('serialize', () => {
           }"
         `);
 
-        expect(serialize(PaymentDetails, models, { graphql: true }))
-          .toMatchInlineSnapshot(`
+        expect(
+          serialize(
+            PaymentDetails,
+            models,
+            { graphql: true },
+            associationMapping
+          )
+        ).toMatchInlineSnapshot(`
           "import { Field, ID, ObjectType } from 'type-graphql';
           import { BaseEntity, Column, Entity, Index } from 'typeorm';
 
@@ -440,11 +554,13 @@ describe('serialize', () => {
               name: 'url', nullable: true,
             })
             url: string | null;
+
           }"
         `);
 
-        expect(serialize(Account, models, { graphql: true }))
-          .toMatchInlineSnapshot(`
+        expect(
+          serialize(Account, models, { graphql: true }, associationMapping)
+        ).toMatchInlineSnapshot(`
           "import { Field, ID, ObjectType } from 'type-graphql';
           import { BaseEntity, Column, Entity, Index, OneToOne } from 'typeorm';
           import { User } from './User';
@@ -485,10 +601,14 @@ describe('serialize', () => {
 
             @OneToOne(() => User, (user) => user.slug)
             user: User;
+
+
+
+
           }"
         `);
 
-        expect(serialize(Photo, models, { graphql: true }))
+        expect(serialize(Photo, models, { graphql: true }, associationMapping))
           .toMatchInlineSnapshot(`
           "import { Field, ID, ObjectType } from 'type-graphql';
           import { BaseEntity, Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
@@ -529,6 +649,8 @@ describe('serialize', () => {
             })
             userId: string;
 
+
+
             @ManyToOne(
               () => User,
               user => user.photos,
@@ -542,3 +664,4 @@ describe('serialize', () => {
     });
   });
 });
+/* eslint-enable max-len */

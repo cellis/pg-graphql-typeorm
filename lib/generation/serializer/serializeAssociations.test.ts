@@ -17,12 +17,19 @@ describe('serializeAssociations', () => {
   let Account: Superluminal.Model;
   let Photo: Superluminal.Model;
   let models: Superluminal.Models;
+  let associationMapping: Superluminal.AssociationMapping;
   beforeAll(async (done) => {
     client = await connectTestDb();
     const introspection = await introspectDb(client, ['superluminal']);
     models = {};
+
+    associationMapping = {
+      manyToOnes: {},
+      oneToManys: {},
+    };
     createModels(models, introspection);
-    createRelationships(models, introspection);
+
+    createRelationships(models, introspection, associationMapping);
 
     User = models.user;
     Account = models.account;
@@ -37,7 +44,12 @@ describe('serializeAssociations', () => {
   describe('OneToOne', () => {
     it('serializes OneToOnes', () => {
       expect(
-        serializeOneToOne('account', User.oneToOnes!.account, Account.columns)
+        serializeOneToOne(
+          'account',
+          User.oneToOnes!.account,
+          Account.columns,
+          associationMapping
+        )
       ).toMatchInlineSnapshot(`
         "  @OneToOne(() => Account, (account) => account.userSlug)
           account: Account;"
@@ -67,38 +79,46 @@ describe('serializeAssociations', () => {
         const serialized = serializeManyToOne(
           'user',
           ClonePhoto.manyToOnes!.user,
-          ClonePhoto
+          ClonePhoto,
+          associationMapping
         );
 
         expect(serialized).toMatchInlineSnapshot(`
-        "  @ManyToOne(
-            () => User,
-            user => user.photos,
-            { onDelete: 'NO ACTION' }
-          )
-          @JoinColumn([{ name: 'user_id', referencedColumnName: 'slug' }])
-          user3: User;"
-      `);
+          "  @ManyToOne(
+              () => User,
+              user => user.photos,
+              { onDelete: 'NO ACTION' }
+            )
+            @JoinColumn([{ name: 'user_id', referencedColumnName: 'slug' }])
+            photo: User;"
+        `);
       });
     });
     it('serializes ManyToOnes', () => {
-      expect(serializeManyToOne('user', Photo.manyToOnes!.user, Photo))
-        .toMatchInlineSnapshot(`
+      expect(
+        serializeManyToOne(
+          'user',
+          Photo.manyToOnes!.user,
+          Photo,
+          associationMapping
+        )
+      ).toMatchInlineSnapshot(`
         "  @ManyToOne(
             () => User,
             user => user.photos,
             { onDelete: 'NO ACTION' }
           )
           @JoinColumn([{ name: 'user_id', referencedColumnName: 'slug' }])
-          user: User;"
+          photo: User;"
       `);
     });
   });
 
   describe('OneToMany', () => {
     it('serializes OneToManys', () => {
-      expect(serializeOneToMany('photo', User.oneToManys!.photo))
-        .toMatchInlineSnapshot(`
+      expect(
+        serializeOneToMany('photo', User.oneToManys!.photo, associationMapping)
+      ).toMatchInlineSnapshot(`
         "  @OneToMany(() => Photo, (photo) => photo.user)
           photos: Photo[];"
       `);
@@ -107,15 +127,24 @@ describe('serializeAssociations', () => {
 
   describe('serializeAssociations', () => {
     it('serializes all associations', () => {
-      expect(serializeAssociations(User, models)).toMatchInlineSnapshot(`
+      expect(serializeAssociations(User, models, associationMapping))
+        .toMatchInlineSnapshot(`
         "  @OneToOne(() => Account, (account) => account.userSlug)
           account: Account;
+
+          @OneToMany(() => Photo, (photo) => photo.user)
+          photos: Photo[];
+
+          @OneToMany(() => Shipment, (shipment) => shipment.fromBySlug)
+          shipmentsByFrom: Shipment[];
+
+          @OneToMany(() => Shipment, (shipment) => shipment.toBySlug)
+          shipmentsByTo: Shipment[];
 
           @OneToMany(() => Transaction, (transaction) => transaction.user)
           transactions: Transaction[];
 
-          @OneToMany(() => Photo, (photo) => photo.user)
-          photos: Photo[];"
+        "
       `);
     });
   });

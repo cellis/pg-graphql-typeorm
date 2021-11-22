@@ -21,7 +21,10 @@ describe('handleForeignNonPrimaryKey', () => {
     ]);
     models = {};
     createModels(models, introspection);
-    createRelationships(models, introspection);
+    createRelationships(models, introspection, {
+      manyToOnes: {},
+      oneToManys: {},
+    });
 
     Shipment = models.shipment;
 

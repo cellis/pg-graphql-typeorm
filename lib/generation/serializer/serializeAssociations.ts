@@ -1,10 +1,14 @@
 import { camelCase } from 'lodash';
+import pluralize from 'pluralize';
+import resolveColumnName from '../associations/resolveColumnName';
+import { serializeManyToOnebyAssoc } from './serializeManyToOneByAssoc';
 import { getColumnName, PascalCase } from './utils';
 
 export const serializeOneToOne = (
   associatedModelName: string,
   oneToOne: Superluminal.OneToOne,
-  columns: Superluminal.Columns
+  columns: Superluminal.Columns,
+  associationMapping: Superluminal.AssociationMapping
 ) => {
   const name: string = associatedModelName;
   const Name = PascalCase(name);
@@ -19,34 +23,91 @@ export const serializeOneToOne = (
   ].join('\n');
 };
 
-export const serializeOneToMany = (
-  associatedModelName: string,
-  oneToMany: Superluminal.Association
+export const serializeOneToManybyAssoc = (
+  model: Superluminal.Model,
+  association: Superluminal.AssociationRecord
 ) => {
-  const name: string = associatedModelName;
-  const Name = PascalCase(name);
-  // we pass false because the inverse is not plural
-  const inverse = getColumnName(oneToMany.inverse, false);
-  const funcs = `() => ${Name}, (${name}) => ${name}.${inverse}`;
-  // prettier-ignore
-  return [
-    `  @OneToMany(${funcs})`,
-    `  ${getColumnName(name, true)}: ${Name}[];`,
-  ].join('\n');
+  const body: string[][] = [];
+  if (association) {
+    const associatedModelNames = Object.keys(association).sort();
+
+    associatedModelNames.forEach((name) => {
+      const columns = association[name];
+      const ClassName = PascalCase(name);
+      if (columns) {
+        columns.forEach((col) => {
+          const src = col[0];
+
+          const byMultiple = columns.length > 1;
+
+          const variableName = `${pluralize(name)}${
+            byMultiple ? `By${PascalCase(src)}` : ''
+          }`;
+          const srcName = byMultiple ? src : resolveColumnName(model);
+          let funcVar = `${name}.${srcName}`;
+
+          if (byMultiple) {
+            funcVar += `By${PascalCase(col[1])}`;
+          }
+          const funcs = `() => ${ClassName}, (${name}) => ${funcVar}`;
+          const variable = `${variableName}: ${ClassName}[];`;
+
+          body.push([`  @OneToMany(${funcs})`, `  ${variable}`]);
+        });
+      }
+    });
+  }
+
+  return body.map((variables) => variables.join('\n')).join('\n\n');
 };
 
-function hasOtherColumnNames(model: Superluminal.Model, name: string) {
-  const has = model.columns[name] || (model.oneToOnes && model.oneToOnes[name]);
-  // (model.manyToOnes && model.manyToOnes[name]) ||
-  // (model.manyToManys && model.manyToManys[name]);
+export const serializeOneToMany = (
+  associatedModelName: string,
+  oneToMany: Superluminal.Association,
+  associationMapping: Superluminal.AssociationMapping
+) => {
+  const association = associationMapping.oneToManys[associatedModelName];
+  if (association) {
+    const body: string[][] = [];
+    const associatedModelNames = Object.keys(association).sort();
 
-  return has;
-}
+    associatedModelNames.forEach((name) => {
+      const columns = association[name];
+      if (columns) {
+        columns.forEach((col) => {
+          const src = col[0];
+          const ClassName = PascalCase(name);
+
+          const variableName = `${pluralize(name)}By${PascalCase(src)}`;
+          const funcs = `() => ${ClassName}, (${name}) => ${name}.${src}`;
+          const variable = `${variableName}: ${ClassName}[];`;
+
+          body.push([`  @OneToMany(${funcs})`, `  ${variable}`]);
+        });
+      }
+    });
+
+    return body.map((variables) => variables.join('\n')).join('\n');
+  } else {
+    const name: string = associatedModelName;
+    const Name = PascalCase(name);
+    // we pass false because the inverse is not plural
+    const inverse = getColumnName(oneToMany.inverse, false);
+    const funcs = `() => ${Name}, (${name}) => ${name}.${inverse}`;
+    // prettier-ignore
+
+    return [
+      `  @OneToMany(${funcs})`,
+      `  ${getColumnName(name, true)}: ${Name}[];`,
+    ].join('\n');
+  }
+};
 
 export const serializeManyToOne = (
   associatedModelName: string,
   manyToOne: Superluminal.ManyToOne,
-  model: Superluminal.Model
+  model: Superluminal.Model,
+  associationMapping: Superluminal.AssociationMapping
 ) => {
   const name: string = associatedModelName;
 
@@ -85,21 +146,7 @@ export const serializeManyToOne = (
     body.push(`  @JoinColumn([{ name: '${jc.name}', ${refCol} }])`);
   }
 
-  let resolvedColumnName = modelName;
-
-  let i = 1;
-
-  if (hasOtherColumnNames(model, resolvedColumnName)) {
-    while (hasOtherColumnNames(model, resolvedColumnName) && i < 5) {
-      const existingDigits = resolvedColumnName.match(/\d+/);
-
-      resolvedColumnName = `${resolvedColumnName.replace(/\d+/, '')}${
-        existingDigits ? parseInt(existingDigits[0], 10) + 1 : 2
-      }`;
-
-      i++;
-    }
-  }
+  const resolvedColumnName = resolveColumnName(model);
 
   // prettier-ignore
   return [
@@ -108,31 +155,38 @@ export const serializeManyToOne = (
   ].join('\n');
 };
 
-export default (model: Superluminal.Model, models: Superluminal.Models) => {
+export default (
+  model: Superluminal.Model,
+  models: Superluminal.Models,
+  associationMapping: Superluminal.AssociationMapping
+) => {
   const result = [];
 
   if (model.oneToOnes) {
     for (const [associatedName, oneToOne] of Object.entries(model.oneToOnes)) {
       const target = models[associatedName];
-      result.push(serializeOneToOne(associatedName, oneToOne, target.columns));
+      result.push(
+        serializeOneToOne(
+          associatedName,
+          oneToOne,
+          target.columns,
+          associationMapping
+        )
+      );
     }
   }
 
-  if (model.oneToManys) {
-    for (const [associatedName, oneToMany] of Object.entries(
-      model.oneToManys
-    )) {
-      result.push(serializeOneToMany(associatedName, oneToMany));
-    }
-  }
+  result.push(
+    serializeOneToManybyAssoc(model, associationMapping.oneToManys[model.name])
+  );
 
-  if (model.manyToOnes) {
-    for (const [associatedName, manyToOne] of Object.entries(
-      model.manyToOnes
-    )) {
-      result.push(serializeManyToOne(associatedName, manyToOne, model));
-    }
-  }
+  result.push(
+    serializeManyToOnebyAssoc(
+      model,
+      associationMapping.manyToOnes[model.name],
+      models
+    )
+  );
 
   return result.join('\n\n');
 };

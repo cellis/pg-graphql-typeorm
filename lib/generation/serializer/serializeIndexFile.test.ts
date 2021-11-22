@@ -16,7 +16,10 @@ describe('serializeIndexFile', () => {
     ]);
     models = {};
     createModels(models, introspection);
-    createRelationships(models, introspection);
+    createRelationships(models, introspection, {
+      manyToOnes: {},
+      oneToManys: {},
+    });
 
     done();
   });
@@ -27,9 +30,11 @@ describe('serializeIndexFile', () => {
   it('creates a file that exports all of the files', () => {
     expect(serializeIndexFile(models)).toMatchInlineSnapshot(`
       "export { Account } from './Account';
+      export { Message } from './Message';
       export { PaymentDetails } from './PaymentDetails';
       export { Photo } from './Photo';
       export { Product } from './Product';
+      export { Shipment } from './Shipment';
       export { Transaction } from './Transaction';
       export { User } from './User';"
     `);
