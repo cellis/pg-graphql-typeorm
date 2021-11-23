@@ -1,5 +1,6 @@
 import { camelCase } from 'lodash';
 import pluralize from 'pluralize';
+import normalizeIdColumn from '../associations/normalizeIdColumn';
 import resolveColumnName from '../associations/resolveColumnName';
 import { serializeManyToOnebyAssoc } from './serializeManyToOneByAssoc';
 import { getColumnName, PascalCase } from './utils';
@@ -25,7 +26,8 @@ export const serializeOneToOne = (
 
 export const serializeOneToManybyAssoc = (
   model: Superluminal.Model,
-  association: Superluminal.AssociationRecord
+  association: Superluminal.AssociationRecord,
+  models: Superluminal.Models
 ) => {
   const body: string[][] = [];
   if (association) {
@@ -38,18 +40,27 @@ export const serializeOneToManybyAssoc = (
         columns.forEach((col) => {
           const src = col[0];
 
+          const dest = col[1];
+          const destModel = models[name];
+
           const byMultiple = columns.length > 1;
 
-          const variableName = `${camelCase(pluralize(name))}${
+          const variableName = `${pluralize(camelCase(name))}${
             byMultiple ? `By${PascalCase(src)}` : ''
           }`;
-          const srcName = byMultiple ? src : resolveColumnName(model);
-          let funcVar = `${name}.${camelCase(srcName)}`;
+          const srcName = byMultiple
+            ? src
+            : resolveColumnName(destModel, model.name);
+          let funcVar = `${camelCase(name)}.${camelCase(
+            normalizeIdColumn(srcName)
+          )}`;
 
           if (byMultiple) {
             funcVar += `By${PascalCase(col[1])}`;
           }
-          const funcs = `() => ${ClassName}, (${name}) => ${funcVar}`;
+          const funcs = `() => ${ClassName}, (${camelCase(
+            name
+          )}) => ${funcVar}`;
           const variable = `${variableName}: ${ClassName}[];`;
 
           body.push([`  @OneToMany(${funcs})`, `  ${variable}`]);
@@ -146,7 +157,7 @@ export const serializeManyToOne = (
     body.push(`  @JoinColumn([{ name: '${jc.name}', ${refCol} }])`);
   }
 
-  const resolvedColumnName = resolveColumnName(model);
+  const resolvedColumnName = resolveColumnName(model, model.name);
 
   // prettier-ignore
   return [
@@ -178,7 +189,7 @@ export default (
 
   const oneToManys = associationMapping.oneToManys[model.name];
   if (oneToManys) {
-    result.push(serializeOneToManybyAssoc(model, oneToManys));
+    result.push(serializeOneToManybyAssoc(model, oneToManys, models));
   }
 
   const manyToOnes = associationMapping.manyToOnes[model.name];

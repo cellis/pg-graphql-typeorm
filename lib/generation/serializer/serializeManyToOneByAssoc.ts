@@ -1,5 +1,6 @@
 import { camelCase } from 'lodash';
 import pluralize from 'pluralize';
+import normalizeIdColumn from '../associations/normalizeIdColumn';
 import resolveColumnName from '../associations/resolveColumnName';
 import { PascalCase } from './utils';
 
@@ -24,13 +25,15 @@ export const serializeManyToOnebyAssoc = (
 
           const byMultiple = columns.length > 1;
 
-          const oneToManyName = `${camelCase(pluralize(model.name))}${
+          const oneToManyName = `${pluralize(camelCase(model.name))}${
             byMultiple ? `By${PascalCase(src)}` : ''
           }`;
 
           const statementBody = [
             `  () => ${DestClassName}`,
-            `  ${destModel.name} => ${destModel.name}.${oneToManyName}`,
+            `  ${camelCase(destModel.name)} => ${camelCase(
+              destModel.name
+            )}.${oneToManyName}`,
           ];
 
           const optionsBody = [];
@@ -45,9 +48,11 @@ export const serializeManyToOnebyAssoc = (
           let varName = '';
 
           if (byMultiple) {
-            varName += `${src}By${PascalCase(dest)}`;
+            varName += `${camelCase(normalizeIdColumn(src))}By${PascalCase(
+              dest
+            )}`;
           } else {
-            varName = resolveColumnName(destModel);
+            varName = resolveColumnName(model, destModel.name);
           }
           body.push([
             '  @ManyToOne(',

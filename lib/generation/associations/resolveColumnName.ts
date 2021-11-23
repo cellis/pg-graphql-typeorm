@@ -1,8 +1,8 @@
 import { camelCase } from 'lodash';
 import hasOtherColumnNames from './hasOtherColumnNames';
 
-const resolveColumnName = (model: Superluminal.Model) => {
-  let resolvedColumnName = camelCase(model.name);
+const resolveColumnName = (model: Superluminal.Model, name: string) => {
+  let resolvedColumnName = camelCase(name);
 
   let i = 1;
 

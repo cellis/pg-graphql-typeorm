@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.serializeManyToOnebyAssoc = void 0;
 const lodash_1 = require("lodash");
 const pluralize_1 = __importDefault(require("pluralize"));
+const normalizeIdColumn_1 = __importDefault(require("../associations/normalizeIdColumn"));
 const resolveColumnName_1 = __importDefault(require("../associations/resolveColumnName"));
 const utils_1 = require("./utils");
 const serializeManyToOnebyAssoc = (model, association, models) => {
@@ -22,10 +23,10 @@ const serializeManyToOnebyAssoc = (model, association, models) => {
                     const destModel = models[name];
                     const DestClassName = utils_1.PascalCase(destModel.name);
                     const byMultiple = columns.length > 1;
-                    const oneToManyName = `${pluralize_1.default(model.name)}${byMultiple ? `By${utils_1.PascalCase(src)}` : ''}`;
+                    const oneToManyName = `${pluralize_1.default(lodash_1.camelCase(model.name))}${byMultiple ? `By${utils_1.PascalCase(src)}` : ''}`;
                     const statementBody = [
                         `  () => ${DestClassName}`,
-                        `  ${destModel.name} => ${destModel.name}.${oneToManyName}`,
+                        `  ${lodash_1.camelCase(destModel.name)} => ${lodash_1.camelCase(destModel.name)}.${oneToManyName}`,
                     ];
                     const optionsBody = [];
                     if (col.onDelete) {
@@ -37,17 +38,17 @@ const serializeManyToOnebyAssoc = (model, association, models) => {
                     const refCol = `referencedColumnName: '${lodash_1.camelCase(dest)}'`;
                     let varName = '';
                     if (byMultiple) {
-                        varName += `${src}By${utils_1.PascalCase(dest)}`;
+                        varName += `${lodash_1.camelCase(normalizeIdColumn_1.default(src))}By${utils_1.PascalCase(dest)}`;
                     }
                     else {
-                        varName = resolveColumnName_1.default(destModel);
+                        varName = resolveColumnName_1.default(model, destModel.name);
                     }
                     body.push([
                         '  @ManyToOne(',
                         `  ${statementBody.join(',\n  ')}`,
                         '  )',
                         `  @JoinColumn([{ name: '${src}', ${refCol} }])`,
-                        `  ${varName}: ${DestClassName};`,
+                        `  ${lodash_1.camelCase(varName)}: ${DestClassName};`,
                     ]);
                 });
             }
