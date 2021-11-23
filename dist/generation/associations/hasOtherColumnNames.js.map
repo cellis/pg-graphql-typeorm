@@ -1,0 +1,1 @@
+{"version":3,"file":"hasOtherColumnNames.js","sourceRoot":"","sources":["../../../lib/generation/associations/hasOtherColumnNames.ts"],"names":[],"mappings":";;AAAA,SAAS,mBAAmB,CAAC,KAAyB,EAAE,IAAY;IAClE,MAAM,GAAG,GAAG,KAAK,CAAC,OAAO,CAAC,IAAI,CAAC,IAAI,CAAC,KAAK,CAAC,SAAS,IAAI,KAAK,CAAC,SAAS,CAAC,IAAI,CAAC,CAAC,CAAC;IAE9E,OAAO,GAAG,CAAC;AACb,CAAC;AAED,kBAAe,mBAAmB,CAAC"}
