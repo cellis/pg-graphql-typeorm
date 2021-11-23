@@ -7,8 +7,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const indexesIntrospection_1 = require("../introspection/indexesIntrospection");
 // eslint-disable-next-line
 const handleForeignNonPrimaryKey_1 = __importDefault(require("./associations/handleForeignNonPrimaryKey"));
+const handleForeignNonPrimaryKey2_1 = __importDefault(require("./associations/handleForeignNonPrimaryKey2"));
 const handleSharedPrimaryKey_1 = __importDefault(require("./associations/handleSharedPrimaryKey"));
-const createRelationship = (modelName, table, models) => {
+const createRelationship = (modelName, table, models, associationMapping) => {
     const model = models[modelName];
     for (const key of Object.keys(table.fkConstraints)) {
         const fk = table.fkConstraints[key];
@@ -16,6 +17,7 @@ const createRelationship = (modelName, table, models) => {
         const foreignModel = models[normalizedTargetTable];
         handleSharedPrimaryKey_1.default(model, fk, foreignModel);
         handleForeignNonPrimaryKey_1.default(model, fk, foreignModel);
+        handleForeignNonPrimaryKey2_1.default(model, fk, foreignModel, associationMapping);
     }
 };
 exports.default = createRelationship;

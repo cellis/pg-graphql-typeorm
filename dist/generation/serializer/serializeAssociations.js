@@ -1,9 +1,15 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.serializeManyToOne = exports.serializeOneToMany = exports.serializeOneToOne = void 0;
+exports.serializeManyToOne = exports.serializeOneToMany = exports.serializeOneToManybyAssoc = exports.serializeOneToOne = void 0;
 const lodash_1 = require("lodash");
+const pluralize_1 = __importDefault(require("pluralize"));
+const resolveColumnName_1 = __importDefault(require("../associations/resolveColumnName"));
+const serializeManyToOneByAssoc_1 = require("./serializeManyToOneByAssoc");
 const utils_1 = require("./utils");
-const serializeOneToOne = (associatedModelName, oneToOne, columns) => {
+const serializeOneToOne = (associatedModelName, oneToOne, columns, associationMapping) => {
     const name = associatedModelName;
     const Name = utils_1.PascalCase(name);
     const columnName = oneToOne.referencedColumn;
@@ -17,26 +23,68 @@ const serializeOneToOne = (associatedModelName, oneToOne, columns) => {
     ].join('\n');
 };
 exports.serializeOneToOne = serializeOneToOne;
-const serializeOneToMany = (associatedModelName, oneToMany) => {
-    const name = associatedModelName;
-    const Name = utils_1.PascalCase(name);
-    // we pass false because the inverse is not plural
-    const inverse = utils_1.getColumnName(oneToMany.inverse, false);
-    const funcs = `() => ${Name}, (${name}) => ${name}.${inverse}`;
-    // prettier-ignore
-    return [
-        `  @OneToMany(${funcs})`,
-        `  ${utils_1.getColumnName(name, true)}: ${Name}[];`,
-    ].join('\n');
+const serializeOneToManybyAssoc = (model, association) => {
+    const body = [];
+    if (association) {
+        const associatedModelNames = Object.keys(association).sort();
+        associatedModelNames.forEach((name) => {
+            const columns = association[name];
+            const ClassName = utils_1.PascalCase(name);
+            if (columns) {
+                columns.forEach((col) => {
+                    const src = col[0];
+                    const byMultiple = columns.length > 1;
+                    const variableName = `${pluralize_1.default(name)}${byMultiple ? `By${utils_1.PascalCase(src)}` : ''}`;
+                    const srcName = byMultiple ? src : resolveColumnName_1.default(model);
+                    let funcVar = `${name}.${srcName}`;
+                    if (byMultiple) {
+                        funcVar += `By${utils_1.PascalCase(col[1])}`;
+                    }
+                    const funcs = `() => ${ClassName}, (${name}) => ${funcVar}`;
+                    const variable = `${variableName}: ${ClassName}[];`;
+                    body.push([`  @OneToMany(${funcs})`, `  ${variable}`]);
+                });
+            }
+        });
+    }
+    return body.map((variables) => variables.join('\n')).join('\n\n');
+};
+exports.serializeOneToManybyAssoc = serializeOneToManybyAssoc;
+const serializeOneToMany = (associatedModelName, oneToMany, associationMapping) => {
+    const association = associationMapping.oneToManys[associatedModelName];
+    if (association) {
+        const body = [];
+        const associatedModelNames = Object.keys(association).sort();
+        associatedModelNames.forEach((name) => {
+            const columns = association[name];
+            if (columns) {
+                columns.forEach((col) => {
+                    const src = col[0];
+                    const ClassName = utils_1.PascalCase(name);
+                    const variableName = `${pluralize_1.default(name)}By${utils_1.PascalCase(src)}`;
+                    const funcs = `() => ${ClassName}, (${name}) => ${name}.${src}`;
+                    const variable = `${variableName}: ${ClassName}[];`;
+                    body.push([`  @OneToMany(${funcs})`, `  ${variable}`]);
+                });
+            }
+        });
+        return body.map((variables) => variables.join('\n')).join('\n');
+    }
+    else {
+        const name = associatedModelName;
+        const Name = utils_1.PascalCase(name);
+        // we pass false because the inverse is not plural
+        const inverse = utils_1.getColumnName(oneToMany.inverse, false);
+        const funcs = `() => ${Name}, (${name}) => ${name}.${inverse}`;
+        // prettier-ignore
+        return [
+            `  @OneToMany(${funcs})`,
+            `  ${utils_1.getColumnName(name, true)}: ${Name}[];`,
+        ].join('\n');
+    }
 };
 exports.serializeOneToMany = serializeOneToMany;
-function hasOtherColumnNames(model, name) {
-    const has = model.columns[name] || (model.oneToOnes && model.oneToOnes[name]);
-    // (model.manyToOnes && model.manyToOnes[name]) ||
-    // (model.manyToManys && model.manyToManys[name]);
-    return has;
-}
-const serializeManyToOne = (associatedModelName, manyToOne, model) => {
+const serializeManyToOne = (associatedModelName, manyToOne, model, associationMapping) => {
     const name = associatedModelName;
     const Name = utils_1.PascalCase(name);
     const optionsBody = [];
@@ -64,15 +112,7 @@ const serializeManyToOne = (associatedModelName, manyToOne, model) => {
         const refCol = `referencedColumnName: '${lodash_1.camelCase(jc.referencedColumnName)}'`;
         body.push(`  @JoinColumn([{ name: '${jc.name}', ${refCol} }])`);
     }
-    let resolvedColumnName = modelName;
-    let i = 1;
-    if (hasOtherColumnNames(model, resolvedColumnName)) {
-        while (hasOtherColumnNames(model, resolvedColumnName) && i < 5) {
-            const existingDigits = resolvedColumnName.match(/\d+/);
-            resolvedColumnName = `${resolvedColumnName.replace(/\d+/, '')}${existingDigits ? parseInt(existingDigits[0], 10) + 1 : 2}`;
-            i++;
-        }
-    }
+    const resolvedColumnName = resolveColumnName_1.default(model);
     // prettier-ignore
     return [
         `${body.join('\n')}`,
@@ -80,23 +120,21 @@ const serializeManyToOne = (associatedModelName, manyToOne, model) => {
     ].join('\n');
 };
 exports.serializeManyToOne = serializeManyToOne;
-exports.default = (model, models) => {
+exports.default = (model, models, associationMapping) => {
     const result = [];
     if (model.oneToOnes) {
         for (const [associatedName, oneToOne] of Object.entries(model.oneToOnes)) {
             const target = models[associatedName];
-            result.push(exports.serializeOneToOne(associatedName, oneToOne, target.columns));
+            result.push(exports.serializeOneToOne(associatedName, oneToOne, target.columns, associationMapping));
         }
     }
-    if (model.oneToManys) {
-        for (const [associatedName, oneToMany] of Object.entries(model.oneToManys)) {
-            result.push(exports.serializeOneToMany(associatedName, oneToMany));
-        }
+    const oneToManys = associationMapping.oneToManys[model.name];
+    if (oneToManys) {
+        result.push(exports.serializeOneToManybyAssoc(model, oneToManys));
     }
-    if (model.manyToOnes) {
-        for (const [associatedName, manyToOne] of Object.entries(model.manyToOnes)) {
-            result.push(exports.serializeManyToOne(associatedName, manyToOne, model));
-        }
+    const manyToOnes = associationMapping.manyToOnes[model.name];
+    if (manyToOnes) {
+        result.push(serializeManyToOneByAssoc_1.serializeManyToOnebyAssoc(model, manyToOnes, models));
     }
     return result.join('\n\n');
 };

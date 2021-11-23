@@ -40,10 +40,14 @@ function generate() {
             yield client.connect();
             const introspection = yield introspectDb_1.default(client, schemas);
             const models = {};
+            const associationMapping = {
+                oneToManys: {},
+                manyToOnes: {},
+            };
             createModels_1.default(models, introspection);
-            createRelationships_1.default(models, introspection);
+            createRelationships_1.default(models, introspection, associationMapping);
             for (const [modelName, model] of Object.entries(models)) {
-                const serialized = serialize_1.default(model, models, { graphql: !!graphql });
+                const serialized = serialize_1.default(model, models, { graphql: !!graphql }, associationMapping);
                 const fileName = utils_1.PascalCase(modelName);
                 try {
                     yield mkdir(output, { recursive: true });

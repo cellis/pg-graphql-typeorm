@@ -12,13 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateMockTables = exports.MessageIndexes = exports.UserIndexes = exports.transactionUserIdIdxName = exports.transactionPrimaryKeyName = exports.paymentDetailsUserSlugFkName = exports.paymentDetailsUserIdIdxName = exports.paymentDetailsPrimaryKeyName = exports.photoUserSlugFkName = exports.photoUserIdIdxName = exports.photoPrimaryKeyName = exports.messagePrimaryKeyName = exports.userPrimaryKeyName = exports.userFullTextIdxName = exports.getIndexNameForTable = exports.getForeignKeyNameForTables = exports.getPrimaryKeyNameForTable = void 0;
+exports.generateMockTables = exports.MessageIndexes = exports.UserIndexes = exports.transactionUserIdIdxName = exports.transactionPrimaryKeyName = exports.paymentDetailsUserSlugFkName = exports.paymentDetailsUserIdIdxName = exports.paymentDetailsPrimaryKeyName = exports.shipmenToUserIdIdxName = exports.shipmentToUserIdFkName = exports.shipmentFromUserIdFkName = exports.shipmentPrimaryKeyName = exports.photoUserSlugFkName = exports.photoUserIdIdxName = exports.photoPrimaryKeyName = exports.messagePrimaryKeyName = exports.userPrimaryKeyName = exports.userFullTextIdxName = exports.getIndexNameForTable = exports.getForeignKeyNameForTables = exports.getPrimaryKeyNameForTable = void 0;
 const sequelize_1 = require("sequelize");
 const AccountTable_1 = __importDefault(require("./tables/AccountTable"));
 const MessageTable_1 = __importDefault(require("./tables/MessageTable"));
 const PaymentDetailsTable_1 = __importDefault(require("./tables/PaymentDetailsTable"));
 const PhotoTable_1 = __importDefault(require("./tables/PhotoTable"));
 const ProductTable_1 = __importDefault(require("./tables/ProductTable"));
+const ShipmentTable_1 = __importDefault(require("./tables/ShipmentTable"));
 const TransactionTable_1 = __importDefault(require("./tables/TransactionTable"));
 const UserTable_1 = __importDefault(require("./tables/UserTable"));
 function getPrimaryKeyNameForTable(table) {
@@ -39,6 +40,10 @@ exports.messagePrimaryKeyName = getPrimaryKeyNameForTable('message');
 exports.photoPrimaryKeyName = getPrimaryKeyNameForTable('photo');
 exports.photoUserIdIdxName = getIndexNameForTable('photo', 'user_id');
 exports.photoUserSlugFkName = getForeignKeyNameForTables('photo', 'user', 'slug');
+exports.shipmentPrimaryKeyName = getPrimaryKeyNameForTable('shipment');
+exports.shipmentFromUserIdFkName = getForeignKeyNameForTables('shipment_from', 'user', 'slug');
+exports.shipmentToUserIdFkName = getForeignKeyNameForTables('shipment_to', 'user', 'slug');
+exports.shipmenToUserIdIdxName = getIndexNameForTable('shipment', 'to');
 exports.paymentDetailsPrimaryKeyName = getPrimaryKeyNameForTable('payment_details');
 exports.paymentDetailsUserIdIdxName = getIndexNameForTable('payment_details', 'user_id');
 exports.paymentDetailsUserSlugFkName = getForeignKeyNameForTables('payment_details', 'user', 'slug');
@@ -93,6 +98,25 @@ function generateMockTables(config, database, schema) {
                 },
             ],
         });
+        const Shipment = sequelize.define('Shipment', ShipmentTable_1.default, {
+            schema,
+            tableName: 'shipment',
+            indexes: [
+                {
+                    fields: ['slug'],
+                    unique: true,
+                    name: exports.shipmentPrimaryKeyName,
+                },
+                {
+                    fields: ['from'],
+                    name: exports.shipmentFromUserIdFkName,
+                },
+                {
+                    fields: ['to'],
+                    name: exports.shipmentToUserIdFkName,
+                },
+            ],
+        });
         sequelize.define('Product', ProductTable_1.default, {
             schema,
             tableName: 'product',
@@ -143,6 +167,18 @@ function generateMockTables(config, database, schema) {
         });
         Transaction.hasOne(User, {
             sourceKey: 'user_id',
+            foreignKey: 'slug',
+            foreignKeyConstraint: true,
+            onDelete: 'CASCADE',
+        });
+        Shipment.hasOne(User, {
+            sourceKey: 'from',
+            foreignKey: 'slug',
+            foreignKeyConstraint: true,
+            onDelete: 'CASCADE',
+        });
+        Shipment.hasOne(User, {
+            sourceKey: 'to',
             foreignKey: 'slug',
             foreignKeyConstraint: true,
             onDelete: 'CASCADE',
