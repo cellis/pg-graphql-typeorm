@@ -24,7 +24,7 @@ export const serializeManyToOnebyAssoc = (
 
           const byMultiple = columns.length > 1;
 
-          const oneToManyName = `${pluralize(model.name)}${
+          const oneToManyName = `${camelCase(pluralize(model.name))}${
             byMultiple ? `By${PascalCase(src)}` : ''
           }`;
 
@@ -54,7 +54,7 @@ export const serializeManyToOnebyAssoc = (
             `  ${statementBody.join(',\n  ')}`,
             '  )',
             `  @JoinColumn([{ name: '${src}', ${refCol} }])`,
-            `  ${varName}: ${DestClassName};`,
+            `  ${camelCase(varName)}: ${DestClassName};`,
           ]);
         });
       }

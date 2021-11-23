@@ -40,11 +40,11 @@ export const serializeOneToManybyAssoc = (
 
           const byMultiple = columns.length > 1;
 
-          const variableName = `${pluralize(name)}${
+          const variableName = `${camelCase(pluralize(name))}${
             byMultiple ? `By${PascalCase(src)}` : ''
           }`;
           const srcName = byMultiple ? src : resolveColumnName(model);
-          let funcVar = `${name}.${srcName}`;
+          let funcVar = `${name}.${camelCase(srcName)}`;
 
           if (byMultiple) {
             funcVar += `By${PascalCase(col[1])}`;
