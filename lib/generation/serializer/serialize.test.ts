@@ -309,49 +309,49 @@ describe('serialize', () => {
           @Entity('user', { schema: 'superluminal' })
           @ObjectType()
           export class User extends BaseEntity {
-            @Field(() => Boolean)
+            @Field(() => Boolean,{ nullable: true })
             @Column('boolean', {
               name: 'connected', nullable: true,
             })
             connected: boolean | null;
 
-            @Field(() => Date)
+            @Field(() => Date,{ nullable: true })
             @Column('timestamp with time zone', {
               name: 'created_at', nullable: true, default: () => 'now()',
             })
             createdAt: Date | null;
 
-            @Field(() => Number)
+            @Field(() => Number,{ nullable: true })
             @Column('integer', {
               name: 'credits', nullable: true, default: () => 0,
             })
             credits: number | null;
 
-            @Field(() => String)
+            @Field(() => String,{ nullable: true })
             @Column('character varying', {
               name: 'first_name', nullable: true,
             })
             firstName: string | null;
 
-            @Field(() => String)
+            @Field(() => String,{ nullable: true })
             @Column('character varying', {
               name: 'full_text', nullable: true,
             })
             fullText: string | null;
 
-            @Field(() => [String])
+            @Field(() => [String],{ nullable: true })
             @Column('text', {
               name: 'hobbies', nullable: true,
             })
             hobbies: string[] | null;
 
-            @Field(() => String)
+            @Field(() => String,{ nullable: true })
             @Column('character varying', {
               name: 'last_name', nullable: true,
             })
             lastName: string | null;
 
-            @Field(() => String)
+            @Field(() => String,{ nullable: true })
             @Column('numeric', {
               name: 'rating', nullable: true, default: () => '0.88',
             })
@@ -363,7 +363,7 @@ describe('serialize', () => {
             })
             slug: string;
 
-            @Field(() => Date)
+            @Field(() => Date,{ nullable: true })
             @Column('timestamp with time zone', {
               name: 'updated_at', nullable: true,
             })
@@ -471,7 +471,7 @@ describe('serialize', () => {
             })
             slug: string;
 
-            @Field(() => String)
+            @Field(() => String,{ nullable: true })
             @Column('character varying', {
               name: 'transactionId', nullable: true,
             })
@@ -532,7 +532,7 @@ describe('serialize', () => {
             })
             updatedAt: Date;
 
-            @Field(() => String)
+            @Field(() => String,{ nullable: true })
             @Column('character varying', {
               name: 'url', nullable: true,
             })
@@ -557,13 +557,13 @@ describe('serialize', () => {
             })
             createdAt: Date;
 
-            @Field(() => String)
+            @Field(() => String,{ nullable: true })
             @Column('character varying', {
               name: 'email', nullable: true,
             })
             email: string | null;
 
-            @Field(() => String)
+            @Field(() => String,{ nullable: true })
             @Column('character varying', {
               name: 'phone', nullable: true,
             })
@@ -615,7 +615,7 @@ describe('serialize', () => {
             })
             updatedAt: Date;
 
-            @Field(() => String)
+            @Field(() => String,{ nullable: true })
             @Column('character varying', {
               name: 'url', nullable: true,
             })

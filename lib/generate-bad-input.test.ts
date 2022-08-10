@@ -1,12 +1,9 @@
 import generate from './generate';
 jest.mock('./config/loadConfig');
 
-jest.mock('fs', () => ({
-  readFileSync: jest.fn(),
-  promises: {
-    writeFile: jest.fn(),
-    mkDir: jest.fn(),
-  },
+jest.mock('fs/promises', () => ({
+  writeFile: jest.fn(),
+  mkDir: jest.fn(),
 }));
 
 describe('generate', () => {

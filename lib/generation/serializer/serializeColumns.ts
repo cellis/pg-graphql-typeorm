@@ -52,7 +52,9 @@ const serializeColumn = (
     ? `() => ${resolvedGraphqlType}`
     : '';
   const serialized = [
-    options?.graphql ? `  @Field(${graphqlReturn})` : '',
+    options?.graphql ? `  @Field(${graphqlReturn}${
+      column.nullable ? ',{ nullable: true }' : ''
+    })` : '',
     `  @Column('${resolveColumnType(column.dataType)}', {`,
     `    ${columnBody.join(', ')},`,
     '  })',
