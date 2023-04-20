@@ -1,3 +1,4 @@
+import resolveType from '../resolveType';
 import { PascalCase } from './utils';
 
 export interface Import {
@@ -59,18 +60,23 @@ const handleImports = (
 
   const typeGraphqlImports = ['ObjectType', 'Field'];
   if (model.primaryKeys) {
-    typeGraphqlImports.push('ID');
-    // model.primaryKeys.forEach((pk) => {
-    //   const column = model.columns[pk];
+    
 
-    //   if (column.autoIncrement
-    // && resolveType(column.dataType) === 'number') {
-    //     // TODO investigate PrimaryGeneratedColumn
-    //     // vs column ({ generated: true, primary: true })
-    //     // typeormImports.push('PrimaryGeneratedColumn');
-    //   }
-    // });
+    model.primaryKeys.forEach((pk) => {
+      const column = model.columns[pk];
+
+      if (column.autoIncrement
+    && resolveType(column.dataType) === 'number') {
+        // TODO investigate PrimaryGeneratedColumn
+        // vs column ({ generated: true, primary: true })
+        typeormImports.push('PrimaryGeneratedColumn');
+      }
+    });
+    if(graphql) {
+      typeGraphqlImports.push('ID');
+    }
   }
+
 
   if (model.indexes) {
     typeormImports.push('Index');

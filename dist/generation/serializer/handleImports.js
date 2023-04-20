@@ -1,5 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const resolveType_1 = __importDefault(require("../resolveType"));
 const utils_1 = require("./utils");
 const handleImports = (model, graphql) => {
     // serialized
@@ -34,16 +38,18 @@ const handleImports = (model, graphql) => {
     }
     const typeGraphqlImports = ['ObjectType', 'Field'];
     if (model.primaryKeys) {
-        typeGraphqlImports.push('ID');
-        // model.primaryKeys.forEach((pk) => {
-        //   const column = model.columns[pk];
-        //   if (column.autoIncrement
-        // && resolveType(column.dataType) === 'number') {
-        //     // TODO investigate PrimaryGeneratedColumn
-        //     // vs column ({ generated: true, primary: true })
-        //     // typeormImports.push('PrimaryGeneratedColumn');
-        //   }
-        // });
+        model.primaryKeys.forEach((pk) => {
+            const column = model.columns[pk];
+            if (column.autoIncrement
+                && resolveType_1.default(column.dataType) === 'number') {
+                // TODO investigate PrimaryGeneratedColumn
+                // vs column ({ generated: true, primary: true })
+                typeormImports.push('PrimaryGeneratedColumn');
+            }
+        });
+        if (graphql) {
+            typeGraphqlImports.push('ID');
+        }
     }
     if (model.indexes) {
         typeormImports.push('Index');

@@ -30,6 +30,7 @@ describe('serializeIndexFile', () => {
   it('creates a file that exports all of the files', () => {
     expect(serializeIndexFile(models)).toMatchInlineSnapshot(`
       "export { Account } from './Account';
+      export { Document } from './Document';
       export { Message } from './Message';
       export { PaymentDetails } from './PaymentDetails';
       export { Photo } from './Photo';

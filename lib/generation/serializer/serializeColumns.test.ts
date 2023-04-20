@@ -36,9 +36,7 @@ describe('serializeColumns', () => {
           })
           createdAt: Date;
 
-          @Column('integer', {
-            name: 'id', primary: true, generated: true, default: () => 0,
-          })
+          @PrimaryGeneratedColumn()
           id: number;
 
           @Column('timestamp with time zone', {

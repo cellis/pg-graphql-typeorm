@@ -3,7 +3,8 @@ import { Table } from '@wmfs';
 import { getTableFromFullyQualifiedPath } from '../introspection/indexesIntrospection';
 // eslint-disable-next-line
 import handleForeignNonPrimaryKey from './associations/handleForeignNonPrimaryKey';
-import handleForeignNonPrimaryKey2 from './associations/handleForeignNonPrimaryKey2';
+import handleForeignNonPrimaryKey2 from 
+  './associations/handleForeignNonPrimaryKey2';
 import handleSharedPrimaryKey from './associations/handleSharedPrimaryKey';
 
 const createRelationship = (

@@ -12,6 +12,7 @@ describe('handleImports', () => {
   let Photo: Superluminal.Model;
   let Message: Superluminal.Model;
   let Product: Superluminal.Model;
+  let Document: Superluminal.Model;
   beforeAll(async (done) => {
     client = await connectTestDb();
     const introspection = await introspectDb(client, ['superluminal']);
@@ -26,6 +27,7 @@ describe('handleImports', () => {
     Photo = models.photo;
     Product = models.product;
     Message = models.message;
+    Document = models.document;
     done();
   });
 
@@ -103,12 +105,22 @@ describe('handleImports', () => {
     });
   });
 
-  describe('model has auto-incrementing primary keys', () => {
+  describe('model has primary keys', () => {
     it('includes "ID" in type-graphql imports', () => {
-      const imp0rts = handleImports(Product, true);
+      const imp0rts = handleImports(Photo, true);
 
       expect(imp0rts['type-graphql'].partial).toEqual(
         expect.arrayContaining(['ID'])
+      );
+    });
+  });
+
+  describe('model has auto-incrementing INTEGER primary keys', () => {
+    it('includes @PrimaryGeneratedColumn in type-graphql imports', () => {
+      const imp0rts = handleImports(Document, true);
+
+      expect(imp0rts.typeorm.partial).toEqual(
+        expect.arrayContaining(['PrimaryGeneratedColumn'])
       );
     });
   });

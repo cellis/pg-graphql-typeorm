@@ -1,6 +1,7 @@
 import { PgToolsConfig } from 'pgtools';
 import { Sequelize } from 'sequelize';
 import AccountTable from './tables/AccountTable';
+import DocumentTable from './tables/DocumentTable';
 import MessageTable from './tables/MessageTable';
 import PaymentDetailsTable from './tables/PaymentDetailsTable';
 import PhotoTable from './tables/PhotoTable';
@@ -64,6 +65,10 @@ export const paymentDetailsUserSlugFkName = getForeignKeyNameForTables(
 
 export const transactionPrimaryKeyName = getPrimaryKeyNameForTable(
   'transaction'
+);
+
+export const documentPrimaryKeyName = getPrimaryKeyNameForTable(
+  'document'
 );
 
 export const transactionUserIdIdxName = getIndexNameForTable(
@@ -130,6 +135,18 @@ export async function generateMockTables(
       {
         fields: ['user_id'],
         name: transactionUserIdIdxName,
+      },
+    ],
+  });
+
+  sequelize.define('Document', DocumentTable, {
+    schema,
+    tableName: 'document',
+    indexes: [
+      {
+        fields: ['id'],
+        unique: true,
+        name: documentPrimaryKeyName,
       },
     ],
   });

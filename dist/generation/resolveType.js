@@ -44,6 +44,7 @@ function resolveType(type, isArray) {
             resolved = 'string';
             break;
         case 'integer':
+        case 'bigint':
         case 'real':
         case 'double precision':
         case 'smallserial':

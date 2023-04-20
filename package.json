@@ -1,6 +1,6 @@
 {
   "name": "pg-graphql-typeorm",
-  "version": "0.3.7",
+  "version": "0.4.1",
   "description": "Easily generate graphql typeorm entities with one command",
   "repository": "github:cellis/pg-graphql-typeorm",
   "main": "./lib/index.js",
@@ -17,6 +17,7 @@
     "test": "yarn fixtures:create && jest ; yarn fixtures:drop",
     "fixtures:create": "ts-node --files ./lib/scripts/createDatabase.ts",
     "fixtures:drop": "ts-node --files ./lib/scripts/dropDatabase.ts",
+    "test:update": "yarn fixtures:create && jest -u ; yarn fixtures:drop",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
   },
   "devDependencies": {
@@ -24,7 +25,7 @@
     "@types/jest": "^26.0.21",
     "@types/lodash": "^4.14.168",
     "@types/mock-fs": "^4.13.0",
-    "@types/node": "^14.14.35",
+    "@types/node": "^18.15.12",
     "@types/pg": "^7.14.11",
     "@types/pluralize": "^0.0.29",
     "@types/q": "^1.5.4",

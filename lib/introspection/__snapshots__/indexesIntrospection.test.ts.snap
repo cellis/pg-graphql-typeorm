@@ -59,6 +59,17 @@ Array [
   },
   Object {
     "index_keys": Array [
+      "id",
+    ],
+    "index_name": "document_pkey",
+    "is_primary": true,
+    "is_unique": true,
+    "method": "btree",
+    "schema_name": "superluminal",
+    "table_name": "superluminal.document",
+  },
+  Object {
+    "index_keys": Array [
       "slug",
     ],
     "index_name": "shipment_pkey",

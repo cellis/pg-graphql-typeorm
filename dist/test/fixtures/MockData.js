@@ -12,9 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateMockTables = exports.MessageIndexes = exports.UserIndexes = exports.transactionUserIdIdxName = exports.transactionPrimaryKeyName = exports.paymentDetailsUserSlugFkName = exports.paymentDetailsUserIdIdxName = exports.paymentDetailsPrimaryKeyName = exports.shipmenToUserIdIdxName = exports.shipmentToUserIdFkName = exports.shipmentFromUserIdFkName = exports.shipmentPrimaryKeyName = exports.photoUserSlugFkName = exports.photoUserIdIdxName = exports.photoPrimaryKeyName = exports.messagePrimaryKeyName = exports.userPrimaryKeyName = exports.userFullTextIdxName = exports.getIndexNameForTable = exports.getForeignKeyNameForTables = exports.getPrimaryKeyNameForTable = void 0;
+exports.generateMockTables = exports.MessageIndexes = exports.UserIndexes = exports.transactionUserIdIdxName = exports.documentPrimaryKeyName = exports.transactionPrimaryKeyName = exports.paymentDetailsUserSlugFkName = exports.paymentDetailsUserIdIdxName = exports.paymentDetailsPrimaryKeyName = exports.shipmenToUserIdIdxName = exports.shipmentToUserIdFkName = exports.shipmentFromUserIdFkName = exports.shipmentPrimaryKeyName = exports.photoUserSlugFkName = exports.photoUserIdIdxName = exports.photoPrimaryKeyName = exports.messagePrimaryKeyName = exports.userPrimaryKeyName = exports.userFullTextIdxName = exports.getIndexNameForTable = exports.getForeignKeyNameForTables = exports.getPrimaryKeyNameForTable = void 0;
 const sequelize_1 = require("sequelize");
 const AccountTable_1 = __importDefault(require("./tables/AccountTable"));
+const DocumentTable_1 = __importDefault(require("./tables/DocumentTable"));
 const MessageTable_1 = __importDefault(require("./tables/MessageTable"));
 const PaymentDetailsTable_1 = __importDefault(require("./tables/PaymentDetailsTable"));
 const PhotoTable_1 = __importDefault(require("./tables/PhotoTable"));
@@ -48,6 +49,7 @@ exports.paymentDetailsPrimaryKeyName = getPrimaryKeyNameForTable('payment_detail
 exports.paymentDetailsUserIdIdxName = getIndexNameForTable('payment_details', 'user_id');
 exports.paymentDetailsUserSlugFkName = getForeignKeyNameForTables('payment_details', 'user', 'slug');
 exports.transactionPrimaryKeyName = getPrimaryKeyNameForTable('transaction');
+exports.documentPrimaryKeyName = getPrimaryKeyNameForTable('document');
 exports.transactionUserIdIdxName = getIndexNameForTable('transaction', 'user_id');
 exports.UserIndexes = [
     {
@@ -95,6 +97,17 @@ function generateMockTables(config, database, schema) {
                 {
                     fields: ['user_id'],
                     name: exports.transactionUserIdIdxName,
+                },
+            ],
+        });
+        sequelize.define('Document', DocumentTable_1.default, {
+            schema,
+            tableName: 'document',
+            indexes: [
+                {
+                    fields: ['id'],
+                    unique: true,
+                    name: exports.documentPrimaryKeyName,
                 },
             ],
         });

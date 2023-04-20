@@ -60,16 +60,24 @@ const serializeColumn = (column, existingColumns, options) => {
     const graphqlReturn = resolvedGraphqlType.length
         ? `() => ${resolvedGraphqlType}`
         : '';
-    const serialized = [
-        (options === null || options === void 0 ? void 0 : options.graphql) ? `  @Field(${graphqlReturn}${column.nullable ? ',{ nullable: true }' : ''})` : '',
-        `  @Column('${resolveType_1.resolveColumnType(column.dataType)}', {`,
-        `    ${columnBody.join(', ')},`,
-        '  })',
-        `  ${normalizedColumnName}: ${resolveType_1.default(column.dataType, column.array)}${nullType};`,
-    ]
-        .filter((s) => s.trim().length)
-        .join('\n');
-    return serialized;
+    let serialized;
+    if (column.primary && resolveType_1.default(column.dataType) === 'number') {
+        serialized = [
+            (options === null || options === void 0 ? void 0 : options.graphql) ? `  @Field(${graphqlReturn}${column.nullable ? ',{ nullable: true }' : ''})` : '',
+            '  @PrimaryGeneratedColumn()',
+            `  ${normalizedColumnName}: ${resolveType_1.default(column.dataType, column.array)}${nullType};`,
+        ];
+    }
+    else {
+        serialized = [
+            (options === null || options === void 0 ? void 0 : options.graphql) ? `  @Field(${graphqlReturn}${column.nullable ? ',{ nullable: true }' : ''})` : '',
+            `  @Column('${resolveType_1.resolveColumnType(column.dataType)}', {`,
+            `    ${columnBody.join(', ')},`,
+            '  })',
+            `  ${normalizedColumnName}: ${resolveType_1.default(column.dataType, column.array)}${nullType};`,
+        ];
+    }
+    return serialized.filter((s) => s.trim().length).join('\n');
 };
 const serializeColumns = (model, options) => {
     const existingColumns = {};

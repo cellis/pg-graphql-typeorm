@@ -57,6 +57,7 @@ function resolveType(type: string, isArray?: boolean): ResolvedType {
       resolved = 'string';
       break;
     case 'integer':
+    case 'bigint':
     case 'real':
     case 'double precision':
     case 'smallserial':
