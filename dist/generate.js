@@ -45,7 +45,7 @@ function generate() {
                 manyToOnes: {},
             };
             createModels_1.default(models, introspection);
-            createRelationships_1.default(models, introspection, associationMapping);
+            createRelationships_1.default(models, introspection, associationMapping, config);
             for (const [modelName, model] of Object.entries(models)) {
                 const serialized = serialize_1.default(model, models, { graphql: !!graphql }, associationMapping);
                 const fileName = utils_1.PascalCase(modelName);

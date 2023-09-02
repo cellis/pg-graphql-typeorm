@@ -41,7 +41,7 @@ async function generate() {
     };
 
     createModels(models, introspection);
-    createRelationships(models, introspection, associationMapping);
+    createRelationships(models, introspection, associationMapping,config);
 
     for (const [modelName, model] of Object.entries(models)) {
       const serialized = serialize(

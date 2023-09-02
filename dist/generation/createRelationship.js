@@ -14,7 +14,9 @@ const createRelationship = (modelName, table, models, associationMapping, config
     const model = models[modelName];
     const excludedForeignKeys = ((_a = config === null || config === void 0 ? void 0 : config.excludeRelationships) === null || _a === void 0 ? void 0 : _a[modelName]) || {};
     for (const key of Object.keys(table.fkConstraints)) {
-        if (excludedForeignKeys[key]) {
+        const fkColumns = table.fkConstraints[key].sourceColumns;
+        if (fkColumns.some((fkColumn) => excludedForeignKeys[fkColumn])) {
+            console.log(`Skipping ${key} because a column in it is excluded`);
             continue;
         }
         const fk = table.fkConstraints[key];

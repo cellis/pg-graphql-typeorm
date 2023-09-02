@@ -19,12 +19,15 @@ const createRelationship = (
   const excludedForeignKeys = config?.excludeRelationships?.[modelName] || {};
 
   for (const key of Object.keys(table.fkConstraints)) {
-    
-    if (excludedForeignKeys[key]) {
+    const fkColumns = table.fkConstraints[key].sourceColumns;
+
+    if (fkColumns.some((fkColumn) => excludedForeignKeys[fkColumn])) {
+      console.log(`Skipping ${key} because a column in it is excluded`);
       continue;
     }
 
     const fk = table.fkConstraints[key];
+    
     const normalizedTargetTable = getTableFromFullyQualifiedPath(
       fk.targetTable
     );
