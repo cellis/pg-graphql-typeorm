@@ -30,7 +30,9 @@ I like to add a script to my package.json:
 
 ### Todo
 
-- [ ] Allow configs. Loading configs works but haven't decided on to do with the configuration. E.g., exclude some tables from generation, or specific columns in a table or even some pattern type stuff.
+- [x] Allow configs. Loading configs works but haven't decided on to do with the configuration. E.g., exclude some tables from generation, or specific columns in a table or even some pattern type stuff.
+
+Update in version 0.5.0 load config (.ftlrc.js in root project) to decide whether to create relationships for a certain field of a model.
 
 
 ### Compatibility

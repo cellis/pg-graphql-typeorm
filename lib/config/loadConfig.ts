@@ -1,4 +1,5 @@
 import { resolve } from 'path';
+
 // When we transpile to js,
 // the require('./.ftlrc.ts') command would fail
 // without this import

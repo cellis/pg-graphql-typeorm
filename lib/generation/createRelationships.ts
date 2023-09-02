@@ -3,7 +3,8 @@ import createRelationship from './createRelationship';
 export default function createRelationships(
   models: Superluminal.Models,
   introspection: IntrospectDB,
-  associationMapping: Superluminal.AssociationMapping
+  associationMapping: Superluminal.AssociationMapping,
+  config: Superluminal.Config = {}
 ) {
   const { info } = introspection;
 
@@ -12,7 +13,13 @@ export default function createRelationships(
     for (const schema of Object.values(info.schemas)) {
       if (schema.tables) {
         for (const [tableName, table] of Object.entries(schema.tables)) {
-          createRelationship(tableName, table, models, associationMapping);
+          createRelationship(
+            tableName, 
+            table, 
+            models, 
+            associationMapping, 
+            config
+            );
         }
       }
     }

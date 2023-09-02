@@ -11,11 +11,18 @@ const createRelationship = (
   modelName: string,
   table: Table,
   models: Record<string, Superluminal.Model>,
-  associationMapping: Superluminal.AssociationMapping
+  associationMapping: Superluminal.AssociationMapping,
+  config: Superluminal.Config
 ) => {
   const model: Superluminal.Model = models[modelName];
 
+  const excludedForeignKeys = config?.excludeRelationships?.[modelName] || {};
+
   for (const key of Object.keys(table.fkConstraints)) {
+    if (excludedForeignKeys[key]) {
+      continue;
+    }
+    
     const fk = table.fkConstraints[key];
     const normalizedTargetTable = getTableFromFullyQualifiedPath(
       fk.targetTable

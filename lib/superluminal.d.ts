@@ -73,6 +73,8 @@ declare namespace Superluminal {
       exclude: Record<string, Record<string, boolean> | boolean>;
       excludeSchemas: Record<string, Record<string, boolean> | boolean>;
     };
+
+    excludeRelationships?: Record<string, Record<string, boolean>>;
   }
 
   type Indexes = Record<string, Index>;
