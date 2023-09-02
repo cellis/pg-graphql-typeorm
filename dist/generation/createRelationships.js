@@ -4,13 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const createRelationship_1 = __importDefault(require("./createRelationship"));
-function createRelationships(models, introspection, associationMapping) {
+function createRelationships(models, introspection, associationMapping, config = {}) {
     const { info } = introspection;
     if (info.schemas) {
         for (const schema of Object.values(info.schemas)) {
             if (schema.tables) {
                 for (const [tableName, table] of Object.entries(schema.tables)) {
-                    createRelationship_1.default(tableName, table, models, associationMapping);
+                    createRelationship_1.default(tableName, table, models, associationMapping, config);
                 }
             }
         }

@@ -19,10 +19,11 @@ const createRelationship = (
   const excludedForeignKeys = config?.excludeRelationships?.[modelName] || {};
 
   for (const key of Object.keys(table.fkConstraints)) {
+    
     if (excludedForeignKeys[key]) {
       continue;
     }
-    
+
     const fk = table.fkConstraints[key];
     const normalizedTargetTable = getTableFromFullyQualifiedPath(
       fk.targetTable
