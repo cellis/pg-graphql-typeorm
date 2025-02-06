@@ -68,14 +68,14 @@ declare namespace Superluminal {
     output?: string;
   }
 
-  interface Config {
+  type Config = {
     graphqlModels?: {
       exclude: Record<string, Record<string, boolean> | boolean>;
       excludeSchemas: Record<string, Record<string, boolean> | boolean>;
     };
 
     excludeRelationships?: Record<string, Record<string, boolean>>;
-  }
+  } & Args;
 
   type Indexes = Record<string, Index>;
   type JoinColumns = Record<string, JoinColumnOption>;
@@ -95,5 +95,21 @@ declare namespace Superluminal {
 
   interface Models {
     [name: string]: Model;
+  }
+
+  export interface TableMetadata {
+    // ... existing properties ...
+    indexes?: Array<{
+      name: string;
+      unique: boolean;
+      fields: string[];
+    }>;
+    foreignKeys?: {
+      [key: string]: {
+        targetTable: string;
+        sourceColumns: string[];
+        targetColumns: string[];
+      };
+    };
   }
 }

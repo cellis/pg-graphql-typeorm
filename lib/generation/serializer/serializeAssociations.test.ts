@@ -16,18 +16,17 @@ describe('serializeAssociations', () => {
   let User: Superluminal.Model;
   let Account: Superluminal.Model;
   let Photo: Superluminal.Model;
-  let models: Superluminal.Models;
+  const models: Superluminal.Models = {};
   let associationMapping: Superluminal.AssociationMapping;
   beforeAll(async (done) => {
     client = await connectTestDb();
     const introspection = await introspectDb(client, ['superluminal']);
-    models = {};
 
     associationMapping = {
       manyToOnes: {},
       oneToManys: {},
     };
-    createModels(models, introspection);
+    await createModels(models, introspection, { output: '.tmp' }, false);
 
     createRelationships(models, introspection, associationMapping);
 

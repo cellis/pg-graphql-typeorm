@@ -8,19 +8,20 @@ describe('createRelationship', () => {
   let client: Client;
   let User: Superluminal.Model;
   let Photo: Superluminal.Model;
-  let Transaction: Superluminal.Model;
   beforeAll(async (done) => {
     client = await connectTestDb();
     const introspection = await introspectDb(client, ['superluminal']);
-    const models: Superluminal.Models = {};
-    createModels(models, introspection);
+    const { models } = await createModels(
+      {}, introspection, { output: '.tmp' }, 
+      false
+    );
+
     createRelationships(models, introspection, {
       manyToOnes: {},
       oneToManys: {},
     });
     User = models.user;
     Photo = models.photo;
-    Transaction = models.transaction;
 
     done();
   });
@@ -46,24 +47,6 @@ describe('createRelationship', () => {
 
   describe('model has a foreign non primary key in a target table', () => {
     describe('target table deleted', () => {
-      const oneToManyOfUser = (source: string) => {
-        const result: Superluminal.ManyToOnes = {
-          user: {
-            inverse: source,
-            onDelete: 'NO ACTION',
-            joinColumns: [
-              {
-                name: 'user_id',
-                referencedColumnName: 'slug',
-                fieldName: 'user',
-              },
-            ],
-          },
-        };
-
-        return result;
-      };
-
       it('ignores the foreign key in the deleted target table', async () => {
         expect(User.oneToManys?.photo).toEqual<Superluminal.Association>({
           inverse: 'user',

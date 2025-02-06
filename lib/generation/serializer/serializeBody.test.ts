@@ -13,8 +13,9 @@ describe('serializeBody', () => {
   beforeAll(async (done) => {
     client = await connectTestDb();
     const introspection = await introspectDb(client, ['superluminal']);
-    const models: Superluminal.Models = {};
-    createModels(models, introspection);
+
+    const { models } = await createModels({}, 
+      introspection, { output: '.tmp' }, false);
     createRelationships(models, introspection, {
       manyToOnes: {},
       oneToManys: {},

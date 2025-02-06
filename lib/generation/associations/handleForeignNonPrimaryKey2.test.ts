@@ -8,12 +8,8 @@ import handleForeignNonPrimaryKey2 from './handleForeignNonPrimaryKey2';
 describe('handleForeignNonPrimaryKey', () => {
   let client: Client;
   let User: Superluminal.Model;
-  let Photo: Superluminal.Model;
-  let Transaction: Superluminal.Model;
   let Shipment: Superluminal.Model;
-  let PaymentDetails: Superluminal.Model;
-  let Account: Superluminal.Model;
-  let models: Superluminal.Models;
+  const models: Superluminal.Models = {};
   let associationMapping: Superluminal.AssociationMapping;
   beforeAll(async (done) => {
     client = await connectTestDb();
@@ -22,8 +18,12 @@ describe('handleForeignNonPrimaryKey', () => {
       'superluminal',
       'superluminal_private',
     ]);
-    models = {};
-    createModels(models, introspection);
+    await createModels(
+      models,
+      introspection,
+      { output: '.tmp' },
+      false,
+    );
     createRelationships(models, introspection, {
       manyToOnes: {},
       oneToManys: {},

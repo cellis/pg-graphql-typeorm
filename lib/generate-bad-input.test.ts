@@ -10,7 +10,7 @@ describe('generate', () => {
   let spiedConsole: jest.SpyInstance;
   const entitiesDirectory = './dist/superluminal-test-entities';
   ('generates a model file for each table in the output directory');
-  let oldArgv: string[];
+  const oldArgv: string[] = [];
 
   beforeAll(() => {
     spiedConsole = jest.spyOn(console, 'error').mockImplementation();
@@ -25,7 +25,7 @@ describe('generate', () => {
         '-s', 'bad_schema'
       );
 
-      await generate();
+      await generate(false);
 
       process.argv = oldArgv;
 

@@ -15,7 +15,7 @@ describe('serializeIndexFile', () => {
       'superluminal_private',
     ]);
     models = {};
-    createModels(models, introspection);
+    await createModels(models, introspection, { output: '.tmp' }, false);
     createRelationships(models, introspection, {
       manyToOnes: {},
       oneToManys: {},

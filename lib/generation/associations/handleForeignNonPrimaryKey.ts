@@ -17,8 +17,15 @@ const handleForeignNonPrimaryKey = (
     const targetColumn = fk.targetColumns[i];
 
     // is the source a primary key?
-    const sourceIsPrimary = source.primaryKeys?.indexOf(sourceColumn) !== -1;
-    const targetIsPrimary = target.primaryKeys?.indexOf(targetColumn) !== -1;
+    let sourceIsPrimary = false;
+    let targetIsPrimary = false;
+
+    try {
+      sourceIsPrimary = source.primaryKeys?.indexOf(sourceColumn) !== -1;
+      targetIsPrimary = target.primaryKeys?.indexOf(targetColumn) !== -1;
+    } catch (error) {
+      continue;
+    }
 
     if (sourceIsPrimary && targetIsPrimary) {
       // if these are both primaries we already handle this

@@ -36,7 +36,7 @@ declare module '@wmfs' {
     columnDefault: null | string;
     isNullable: IsNullable;
     dataType: string;
-    characterMaximumLength: null;
+    characterMaximumLength: number | null;
     numericScale: number | null;
     comment: null;
     array: boolean;

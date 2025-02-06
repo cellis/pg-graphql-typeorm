@@ -12,7 +12,7 @@ describe('serializeImports', () => {
     client = await connectTestDb();
     const introspection = await introspectDb(client, ['superluminal']);
     const models: Superluminal.Models = {};
-    createModels(models, introspection);
+    await createModels(models, introspection, { output: '.tmp' }, false);
     createRelationships(models, introspection, {
       manyToOnes: {},
       oneToManys: {},
@@ -27,6 +27,7 @@ describe('serializeImports', () => {
   });
 
   it('serializes the imports properly', () => {
+    /* eslint-disable max-len */
     expect(serializeImports(User)).toMatchInlineSnapshot(`
       "import { BaseEntity, Column, Entity, Index, OneToMany, OneToOne } from 'typeorm';
       import { Account } from './Account';
@@ -35,6 +36,7 @@ describe('serializeImports', () => {
       import { Transaction } from './Transaction';
       "
     `);
+    /* eslint-enable max-len */
   });
 
   it('serializes the graphql imports properly', () => {

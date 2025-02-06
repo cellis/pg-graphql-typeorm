@@ -25,7 +25,7 @@ describe('generate', () => {
     });
 
     it(modelGenerationAssertion, async () => {
-      await generate();
+      await generate(false);
       expect(fs.promises.writeFile).toHaveBeenCalled();
     });
   });
@@ -38,7 +38,7 @@ describe('generate', () => {
     });
 
     it(modelGenerationAssertion, async () => {
-      await generate();
+      await generate(false);
       expect(fs.promises.writeFile).toBeCalled();
     });
   });
@@ -50,7 +50,7 @@ describe('generate', () => {
     });
 
     it(modelGenerationAssertion, async () => {
-      await generate();
+      await generate(false);
       expect(fs.promises.writeFile).toBeCalled();
     });
   });

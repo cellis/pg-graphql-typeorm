@@ -12,18 +12,21 @@ import introspectDb from './introspection/introspectDb';
 
 const { writeFile, mkdir } = fs.promises;
 
-async function generate() {
+async function generate(checkHashes = true) {
   try {
+    const yargsConfig = processYargs();
+    const fileConfig = await loadConfig();
+    const config = { ...fileConfig, ...yargsConfig };  // Prefer yargs values
+    
     const {
       host,
       port,
       schemas: schemasRaw,
       database,
       graphql,
-    } = processYargs();
-    let { output } = processYargs();
-    const config = await loadConfig();
-    output = output || resolve(process.cwd(), 'ftl-models');
+      output = resolve(process.cwd(), 'ftl-models'),
+    } = config;
+
     const schemas = schemasRaw?.split(',') || ['public'];
     const client = postgresDriver({
       host,
@@ -40,7 +43,7 @@ async function generate() {
       manyToOnes: {},
     };
 
-    createModels(models, introspection);
+    const { hashes } = await createModels(models, introspection, config, checkHashes);
     createRelationships(models, introspection, associationMapping,config);
 
     for (const [modelName, model] of Object.entries(models)) {
@@ -62,6 +65,10 @@ async function generate() {
     const indexFile = serializeIndexFile(models);
 
     await writeFile(resolve(`${output}`, 'index.ts'), indexFile);
+    await writeFile(
+      resolve(`${output}`, 'entities.json'),
+      JSON.stringify(hashes, null, 2)
+    );
 
     await client.end();
   } catch (error) {

@@ -19,7 +19,9 @@ describe('createModel', () => {
     client = await connectTestDb();
 
     const introspection = await introspectDb(client, ['superluminal']);
-    const models = createModels({}, introspection);
+    const { models } = await createModels({}, introspection, {
+      output: '.tmp',
+    }, false);
 
     User = models.user;
     Product = models.product;

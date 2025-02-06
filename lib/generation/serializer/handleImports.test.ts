@@ -11,13 +11,12 @@ describe('handleImports', () => {
   let User: Superluminal.Model;
   let Photo: Superluminal.Model;
   let Message: Superluminal.Model;
-  let Product: Superluminal.Model;
   let Document: Superluminal.Model;
   beforeAll(async (done) => {
     client = await connectTestDb();
     const introspection = await introspectDb(client, ['superluminal']);
     const models: Superluminal.Models = {};
-    createModels(models, introspection);
+    await createModels(models, introspection, { output: '.tmp' }, false);
     createRelationships(models, introspection, {
       manyToOnes: {},
       oneToManys: {},
@@ -25,7 +24,6 @@ describe('handleImports', () => {
 
     User = models.user;
     Photo = models.photo;
-    Product = models.product;
     Message = models.message;
     Document = models.document;
     done();
