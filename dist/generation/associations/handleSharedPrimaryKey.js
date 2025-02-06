@@ -39,8 +39,12 @@ const handleSharedPrimaryKey = (source, fk, target) => {
     var _a, _b;
     const intersectingPrimaries = {};
     if (!target) {
-        console.error(`${source.name} has a fk in a target of ${fk.targetColumns}`);
-        console.error(`${fk.targetColumns} do not exist`);
+        try {
+            console.error(`${source.name} 
+        has a fk in a target of ${fk.targetColumns}`);
+            console.error(`${fk.targetColumns} do not exist`);
+        }
+        catch (error) { }
         return;
     }
     if (target.primaryKeys && fk.targetColumns) {
