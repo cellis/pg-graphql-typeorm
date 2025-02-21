@@ -23,6 +23,14 @@ const handleForeignNonPrimaryKey2 = (source, fk, target, associationMapping) => 
             // if these are both primaries we already handle this
             break;
         }
+        if (!target) {
+            console.error(`${source === null || source === void 0 ? void 0 : source.name} has a fk in a target of ${fk.targetColumns}`);
+            continue;
+        }
+        if (!source) {
+            console.error(`${target.name} has a fk in a source of ${fk.sourceColumns}`);
+            continue;
+        }
         const existingOneToManys = associationMapping.oneToManys[target.name] || {};
         const existingManyToOnes = associationMapping.manyToOnes[source.name] || {};
         const existingOTMKeys = existingOneToManys[source.name] || [];

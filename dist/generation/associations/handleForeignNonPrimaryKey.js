@@ -23,10 +23,22 @@ const handleForeignNonPrimaryKey = (source, fk, target) => {
             // if these are both primaries we already handle this
             break;
         }
-        target.oneToManys = Object.assign(Object.assign({}, target.oneToManys), { [source.name]: {
+        if (!target) {
+            console.error(`${source === null || source === void 0 ? void 0 : source.name} has a fk in a target of ${fk.targetColumns}`);
+            continue;
+        }
+        if (!source) {
+            console.error(`${target.name} has a fk in a source of ${fk.sourceColumns}`);
+            continue;
+        }
+        if (!target.oneToManys)
+            target.oneToManys = {};
+        if (!source.manyToOnes)
+            source.manyToOnes = {};
+        target.oneToManys = Object.assign(Object.assign({}, (target.oneToManys || {})), { [source.name]: {
                 inverse: target.name,
             } });
-        source.manyToOnes = Object.assign(Object.assign({}, source.manyToOnes), { [target.name]: {
+        source.manyToOnes = Object.assign(Object.assign({}, (source.manyToOnes || {})), { [target.name]: {
                 inverse: source.name,
                 joinColumns: [
                     {

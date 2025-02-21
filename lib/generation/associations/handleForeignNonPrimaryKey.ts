@@ -8,9 +8,9 @@ import { Fk } from '@wmfs';
  * @param target
  */
 const handleForeignNonPrimaryKey = (
-  source: Superluminal.Model,
+  source: Superluminal.Model | undefined,
   fk: Fk,
-  target: Superluminal.Model
+  target: Superluminal.Model | undefined
 ) => {
   for (let i = 0; i < fk.sourceColumns.length; i++) {
     const sourceColumn = fk.sourceColumns[i];
@@ -30,15 +30,32 @@ const handleForeignNonPrimaryKey = (
       break;
     }
 
+    if (!target) {
+      console.error(
+        `${source?.name} has a fk in a target of ${fk.targetColumns}`
+      );
+      continue;
+    }
+
+    if (!source) {
+      console.error(
+        `${target.name} has a fk in a source of ${fk.sourceColumns}`
+      );
+      continue;
+    }
+
+    if (!target.oneToManys) target.oneToManys = {};
+    if (!source.manyToOnes) source.manyToOnes = {};
+
     target.oneToManys = {
-      ...target.oneToManys,
+      ...(target.oneToManys || {}),
       [source.name]: {
         inverse: target.name,
       },
     };
 
     source.manyToOnes = {
-      ...source.manyToOnes,
+      ...(source.manyToOnes || {}),
       [target.name]: {
         inverse: source.name,
         joinColumns: [

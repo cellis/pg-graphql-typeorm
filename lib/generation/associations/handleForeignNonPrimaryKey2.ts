@@ -8,9 +8,9 @@ import { Fk } from '@wmfs';
  * @param target
  */
 const handleForeignNonPrimaryKey2 = (
-  source: Superluminal.Model,
+  source: Superluminal.Model | undefined,
   fk: Fk,
-  target: Superluminal.Model,
+  target: Superluminal.Model | undefined,
   associationMapping: Superluminal.AssociationMapping
 ) => {
   for (let i = 0; i < fk.sourceColumns.length; i++) {
@@ -28,6 +28,20 @@ const handleForeignNonPrimaryKey2 = (
     if (sourceIsPrimary && targetIsPrimary) {
       // if these are both primaries we already handle this
       break;
+    }
+
+    if (!target) {
+      console.error(
+        `${source?.name} has a fk in a target of ${fk.targetColumns}`
+      );
+      continue;
+    }
+
+    if (!source) {
+      console.error(
+        `${target.name} has a fk in a source of ${fk.sourceColumns}`
+      );
+      continue;
     }
 
     const existingOneToManys = associationMapping.oneToManys[target.name] || {};
