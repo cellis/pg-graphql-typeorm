@@ -20,11 +20,9 @@ const handleForeignNonPrimaryKey = (
     let sourceIsPrimary = false;
     let targetIsPrimary = false;
 
-    try {
-      sourceIsPrimary = source.primaryKeys?.indexOf(sourceColumn) !== -1;
-      targetIsPrimary = target.primaryKeys?.indexOf(targetColumn) !== -1;
-    } catch (error) {
-      continue;
+    if (source?.primaryKeys && target?.primaryKeys) {
+      sourceIsPrimary = source.primaryKeys.indexOf(sourceColumn) !== -1;
+      targetIsPrimary = target.primaryKeys.indexOf(targetColumn) !== -1;
     }
 
     if (sourceIsPrimary && targetIsPrimary) {
