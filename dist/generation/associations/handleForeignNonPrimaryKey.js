@@ -9,19 +9,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @param target
  */
 const handleForeignNonPrimaryKey = (source, fk, target) => {
-    var _a, _b;
     for (let i = 0; i < fk.sourceColumns.length; i++) {
         const sourceColumn = fk.sourceColumns[i];
         const targetColumn = fk.targetColumns[i];
         // is the source a primary key?
         let sourceIsPrimary = false;
         let targetIsPrimary = false;
-        try {
-            sourceIsPrimary = ((_a = source.primaryKeys) === null || _a === void 0 ? void 0 : _a.indexOf(sourceColumn)) !== -1;
-            targetIsPrimary = ((_b = target.primaryKeys) === null || _b === void 0 ? void 0 : _b.indexOf(targetColumn)) !== -1;
-        }
-        catch (error) {
-            continue;
+        if ((source === null || source === void 0 ? void 0 : source.primaryKeys) && (target === null || target === void 0 ? void 0 : target.primaryKeys)) {
+            sourceIsPrimary = source.primaryKeys.indexOf(sourceColumn) !== -1;
+            targetIsPrimary = target.primaryKeys.indexOf(targetColumn) !== -1;
         }
         if (sourceIsPrimary && targetIsPrimary) {
             // if these are both primaries we already handle this

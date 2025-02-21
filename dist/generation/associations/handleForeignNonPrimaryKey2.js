@@ -9,13 +9,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @param target
  */
 const handleForeignNonPrimaryKey2 = (source, fk, target, associationMapping) => {
-    var _a, _b;
     for (let i = 0; i < fk.sourceColumns.length; i++) {
         const sourceColumn = fk.sourceColumns[i];
         const targetColumn = fk.targetColumns[i];
         // is the source a primary key?
-        const sourceIsPrimary = ((_a = source.primaryKeys) === null || _a === void 0 ? void 0 : _a.indexOf(sourceColumn)) !== -1;
-        const targetIsPrimary = ((_b = target.primaryKeys) === null || _b === void 0 ? void 0 : _b.indexOf(targetColumn)) !== -1;
+        const sourceIsPrimary = (source === null || source === void 0 ? void 0 : source.primaryKeys)
+            ? source.primaryKeys.indexOf(sourceColumn) !== -1
+            : false;
+        const targetIsPrimary = (target === null || target === void 0 ? void 0 : target.primaryKeys)
+            ? target.primaryKeys.indexOf(targetColumn) !== -1
+            : false;
         if (sourceIsPrimary && targetIsPrimary) {
             // if these are both primaries we already handle this
             break;
