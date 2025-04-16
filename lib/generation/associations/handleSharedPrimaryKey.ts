@@ -38,23 +38,33 @@ export const incrementJoinColumnIfNeeded = (
  * @param target
  */
 const handleSharedPrimaryKey = (
-  source: Superluminal.Model,
-  fk: Fk,
-  target: Superluminal.Model
+  source?: Superluminal.Model,
+  fk?: Fk,
+  target?: Superluminal.Model
 ) => {
   // how to know if the foreign keys are shared even if
   // they have different names.
 
   const intersectingPrimaries: Record<string, string> = {};
 
-  if (!target) {
-    try {
-      console.error(`${source.name} 
-        has a fk in a target of ${fk.targetColumns}`);
-      console.error(`${fk.targetColumns} do not exist`);
-    } catch (error) {}
+  if (!source || !target || !fk) {
+    if (!fk) {
+      // console.error(`fk is undefined`);
+    }
+
+    if (!source && target) {
+      // console.error(`${target.name} has a fk in a target of ${fk?.targetColumns}`);
+    }
+
+    if (!target && source) {
+      // console.error(`${source.name} has a fk in a target of ${fk?.targetColumns}`);
+    }
+
     return;
   }
+
+
+
 
   if (target.primaryKeys && fk.targetColumns) {
     for (let i = 0; i < fk.sourceColumns.length; i++) {

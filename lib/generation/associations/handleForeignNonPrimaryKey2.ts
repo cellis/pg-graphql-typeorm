@@ -16,17 +16,17 @@ const handleForeignNonPrimaryKey2 = (
 
   if (!target || !source) {
     if (!target && source) {
-      console.error(
-        `${source?.name} has a fk in a target of ${fk.targetColumns}`
-      );
+      // console.error(
+      //   `${source?.name} has a fk in a target of ${fk.targetColumns}`
+      // );
     }
 
     if (!source && target) {
-      console.error(
-        `${target.name} has a fk in a source of ${fk.sourceColumns}`
-      );
+      // console.error(
+      //   `${target.name} has a fk in a source of ${fk.sourceColumns}`
+      // );
     }
-    
+
     return;
   }
 

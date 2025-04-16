@@ -38,13 +38,16 @@ const handleSharedPrimaryKey = (source, fk, target) => {
     // they have different names.
     var _a, _b;
     const intersectingPrimaries = {};
-    if (!target) {
-        try {
-            console.error(`${source.name} 
-        has a fk in a target of ${fk.targetColumns}`);
-            console.error(`${fk.targetColumns} do not exist`);
+    if (!source || !target || !fk) {
+        if (!fk) {
+            console.error(`fk is undefined`);
         }
-        catch (error) { }
+        if (!source && target) {
+            console.error(`${target.name} has a fk in a target of ${fk === null || fk === void 0 ? void 0 : fk.targetColumns}`);
+        }
+        if (!target && source) {
+            console.error(`${source.name} has a fk in a target of ${fk === null || fk === void 0 ? void 0 : fk.targetColumns}`);
+        }
         return;
     }
     if (target.primaryKeys && fk.targetColumns) {

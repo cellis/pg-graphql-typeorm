@@ -9,6 +9,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @param target
  */
 const handleForeignNonPrimaryKey2 = (source, fk, target, associationMapping) => {
+    if (!target || !source) {
+        if (!target && source) {
+            console.error(`${source === null || source === void 0 ? void 0 : source.name} has a fk in a target of ${fk.targetColumns}`);
+        }
+        if (!source && target) {
+            console.error(`${target.name} has a fk in a source of ${fk.sourceColumns}`);
+        }
+        return;
+    }
     for (let i = 0; i < fk.sourceColumns.length; i++) {
         const sourceColumn = fk.sourceColumns[i];
         const targetColumn = fk.targetColumns[i];
@@ -22,14 +31,6 @@ const handleForeignNonPrimaryKey2 = (source, fk, target, associationMapping) => 
         if (sourceIsPrimary && targetIsPrimary) {
             // if these are both primaries we already handle this
             break;
-        }
-        if (!target) {
-            console.error(`${source === null || source === void 0 ? void 0 : source.name} has a fk in a target of ${fk.targetColumns}`);
-            continue;
-        }
-        if (!source) {
-            console.error(`${target.name} has a fk in a source of ${fk.sourceColumns}`);
-            continue;
         }
         const existingOneToManys = associationMapping.oneToManys[target.name] || {};
         const existingManyToOnes = associationMapping.manyToOnes[source.name] || {};
