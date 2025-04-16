@@ -13,7 +13,26 @@ const handleForeignNonPrimaryKey2 = (
   target: Superluminal.Model | undefined,
   associationMapping: Superluminal.AssociationMapping
 ) => {
+
+  if (!target || !source) {
+    if (!target && source) {
+      console.error(
+        `${source?.name} has a fk in a target of ${fk.targetColumns}`
+      );
+    }
+
+    if (!source && target) {
+      console.error(
+        `${target.name} has a fk in a source of ${fk.sourceColumns}`
+      );
+    }
+    
+    return;
+  }
+
   for (let i = 0; i < fk.sourceColumns.length; i++) {
+    
+
     const sourceColumn = fk.sourceColumns[i];
     const targetColumn = fk.targetColumns[i];
 
@@ -30,19 +49,7 @@ const handleForeignNonPrimaryKey2 = (
       break;
     }
 
-    if (!target) {
-      console.error(
-        `${source?.name} has a fk in a target of ${fk.targetColumns}`
-      );
-      continue;
-    }
-
-    if (!source) {
-      console.error(
-        `${target.name} has a fk in a source of ${fk.sourceColumns}`
-      );
-      continue;
-    }
+    
 
     const existingOneToManys = associationMapping.oneToManys[target.name] || {};
     const existingManyToOnes = associationMapping.manyToOnes[source.name] || {};
